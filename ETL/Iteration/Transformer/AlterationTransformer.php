@@ -1,12 +1,12 @@
 <?php
 
-namespace Earls\OxPeckerDataBundle\ETL\Iteration\Transformer;
+namespace Cifren\OxPeckerDataBundle\ETL\Iteration\Transformer;
 
 use Knp\ETL\TransformerInterface;
 use Knp\ETL\ContextInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
-use Earls\OxPeckerDataBundle\ETL\Iteration\LoggableInterface;
+use Cifren\OxPeckerDataBundle\ETL\Iteration\LoggableInterface;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -63,7 +63,7 @@ class AlterationTransformer implements TransformerInterface, LoggableInterface
     /**
      * @param LoggerInterface $logger
      *
-     * @return \Earls\OxPeckerDataBundle\ETL\Iteration\Transformer\ObjectAlterationTransformer
+     * @return \Cifren\OxPeckerDataBundle\ETL\Iteration\Transformer\ObjectAlterationTransformer
      */
     public function setLogger(LoggerInterface $logger)
     {

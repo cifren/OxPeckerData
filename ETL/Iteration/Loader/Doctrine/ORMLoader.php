@@ -1,12 +1,12 @@
 <?php
 
-namespace Earls\OxPeckerDataBundle\ETL\Iteration\Loader\Doctrine;
+namespace Cifren\OxPeckerDataBundle\ETL\Iteration\Loader\Doctrine;
 
 use Psr\Log\LoggerAwareTrait;
 use Doctrine\ORM\EntityManager;
 use Knp\ETL\ContextInterface;
 use Knp\ETL\LoaderInterface;
-use Earls\OxPeckerDataBundle\ETL\Iteration\LoggableInterface;
+use Cifren\OxPeckerDataBundle\ETL\Iteration\LoggableInterface;
 use Psr\Log\LoggerInterface;
 
 class ORMLoader implements LoaderInterface, LoggableInterface
@@ -69,7 +69,7 @@ class ORMLoader implements LoaderInterface, LoggableInterface
     /**
      * @param LoggerInterface $logger
      *
-     * @return \Earls\OxPeckerDataBundle\ETL\Iteration\Transformer\ObjectAlterationTransformer
+     * @return \Cifren\OxPeckerDataBundle\ETL\Iteration\Transformer\ObjectAlterationTransformer
      */
     public function setLogger(LoggerInterface $logger)
     {

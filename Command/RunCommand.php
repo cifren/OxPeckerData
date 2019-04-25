@@ -1,24 +1,18 @@
 <?php
 
-namespace Earls\OxPeckerDataBundle\Command;
+namespace Cifren\OxPeckerDataBundle\Command;
 
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Earls\OxPeckerDataBundle\Definition\DataConfigurationInterface;
-use Earls\FlamingoCommandQueueBundle\Model\FlgScriptStatus;
-use Earls\OxPeckerDataBundle\Dispatcher\RunCommandEvent;
+use Cifren\OxPeckerDataBundle\Definition\DataConfigurationInterface;
+use Cifren\OxPeckerDataBundle\Dispatcher\RunCommandEvent;
 
 /**
- * Earls\OxPeckerDataBundle\Command\RunCommand.
+ * Cifren\OxPeckerDataBundle\Command\RunCommand.
  */
 class RunCommand extends AdvancedCommand
 {
-    /**
-     * @var \Earls\FlamingoCommandQueueBundle\Model\CommandManagerInstance
-     */
-    protected $cmdManager;
-
     protected function configure()
     {
         parent::configure();
@@ -39,7 +33,7 @@ class RunCommand extends AdvancedCommand
         if (!$dataTierConfig) {
             throw new \InvalidArgumentException(sprintf('No data tier configuration has been find with name \'%s\' ', $input->getArgument('namedatatier')));
         } elseif (!$dataTierConfig instanceof DataConfigurationInterface) {
-            throw new \InvalidArgumentException(sprintf('Service has been found but the class is not an instance of \'Earls\OxPeckerData\Report\SQLInterface\''));
+            throw new \InvalidArgumentException(sprintf('Service has been found but the class is not an instance of \'Cifren\OxPeckerData\Report\SQLInterface\''));
         }
 
         if (isset($input->getArgument('args')[0]) && $input->getArgument('args')[0] == 'help') {
@@ -59,17 +53,9 @@ class RunCommand extends AdvancedCommand
         try {
             $dataProcess->process($dataTierConfig, $args);
         } catch (\Exception $e) {
-            $dataTierConfigOptions = $dataTierConfig->getOptions();
-            if ($dataTierConfigOptions['activate-flamingo']) {
-                $this->getLogger()->notice('An error happened: '.$e->getMessage());
-                $this->getLogger()->notice($e->getTraceAsString());
-                $this->stopScript($dataTierConfig, $errorSignal, $input->getArgument('namedatatier'), $args);
-                throw $e;
-            } else {
-                $this->stopScript($dataTierConfig, $errorSignal, $input->getArgument('namedatatier'), $args);
-                throw $e;
-            }
             $errorSignal = true;
+            $dataTierConfigOptions = $dataTierConfig->getOptions();
+            $this->stopScript($dataTierConfig, $errorSignal, $input->getArgument('namedatatier'), $args);
         }
         //log system
         $this->stopScript($dataTierConfig, $errorSignal, $input->getArgument('namedatatier'), $args);
@@ -82,53 +68,13 @@ class RunCommand extends AdvancedCommand
         $this->setStartTime();
         $this->getLogger()->notice('Arguments: '.$this->getImplodeArguments($args));
         $dataTierConfigOptions = $dataTierConfig->getOptions();
-
-        //run flamingo only if activate
-        if ($dataTierConfigOptions['activate-flamingo']) {
-            $this->cmdManager = $this->getContainer()->get('flamingo.manager.command');
-
-            //set entity manager
-            if ($dataTierConfig->getEntityManager()) {
-                $this->cmdManager->setEntityManager($dataTierConfig->getEntityManager());
-            }
-
-            //if an array means an array of option for Flamingo
-            if (is_array($dataTierConfigOptions['activate-flamingo'])) {
-                $this->cmdManager->setOptions($dataTierConfigOptions['activate-flamingo']);
-            }
-            $queueGroupName = $dataTierConfig->setQueueGroupName($name, $args);
-            $queueUniqueId = $dataTierConfig->setQueueUniqueId($name, $args);
-
-            //start manager on this instance
-            $this->cmdManager->start($name, $queueGroupName, $queueUniqueId);
-            $this->cmdManager->saveProgress($this->getLogs());
-        }
     }
 
     protected function stopScript(DataConfigurationInterface $dataTierConfig, $errorSignal, $name, $args)
     {
         $this->setEndTime();
         $this->noticeTime();
-        $dataTierConfigOptions = $dataTierConfig->getOptions();
-
-        //run flamingo only if activate
-        if ($dataTierConfigOptions['activate-flamingo']) {
-            $dispatcher = $this->getContainer()->get('event_dispatcher');
-            if ($errorSignal) {
-                $status = FlgScriptStatus::STATE_FAILED;
-
-                $event = new RunCommandEvent($name, $args);
-                $dispatcher->dispatch('run_command.failed', $event);
-            } else {
-                $status = FlgScriptStatus::STATE_FINISHED;
-
-                $event = new RunCommandEvent($name, $args);
-                $dispatcher->dispatch('run_command.success', $event);
-            }
-            //stop timer and log all information in database
-            $this->cmdManager->stop($this->getLogs(), $status);
-        }
-
+        $dispatcher = $this->getContainer()->get('event_dispatcher');
         $event = new RunCommandEvent($name, $args);
         $dispatcher->dispatch('run_command.stop', $event);
     }

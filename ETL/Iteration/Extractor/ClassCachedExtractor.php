@@ -1,10 +1,10 @@
 <?php
 
-namespace Earls\OxPeckerDataBundle\ETL\Iteration\Extractor;
+namespace Cifren\OxPeckerDataBundle\ETL\Iteration\Extractor;
 
 use Knp\ETL\ExtractorInterface;
 use Knp\ETL\ContextInterface;
-use Earls\OxPeckerDataBundle\ETL\Iteration\LoggableInterface;
+use Cifren\OxPeckerDataBundle\ETL\Iteration\LoggableInterface;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -103,7 +103,7 @@ class ClassCachedExtractor implements ExtractorInterface, \Iterator, \Countable,
     /**
      * @param LoggerInterface $logger
      *
-     * @return \Earls\OxPeckerDataBundle\ETL\Iteration\Transformer\ObjectAlterationTransformer
+     * @return \Cifren\OxPeckerDataBundle\ETL\Iteration\Transformer\ObjectAlterationTransformer
      */
     public function setLogger(LoggerInterface $logger)
     {

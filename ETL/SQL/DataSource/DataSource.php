@@ -1,6 +1,6 @@
 <?php
 
-namespace Earls\OxPeckerDataBundle\ETL\SQL\DataSource;
+namespace Cifren\OxPeckerDataBundle\ETL\SQL\DataSource;
 
 class DataSource
 {

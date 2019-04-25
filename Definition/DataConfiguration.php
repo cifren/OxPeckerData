@@ -1,10 +1,10 @@
 <?php
 
-namespace Earls\OxPeckerDataBundle\Definition;
+namespace Cifren\OxPeckerDataBundle\Definition;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Bridge\Monolog\Logger;
-use Earls\OxPeckerDataBundle\ETL\SQL\DataSource\ORMDataSource;
+use Cifren\OxPeckerDataBundle\ETL\SQL\DataSource\ORMDataSource;
 
 class DataConfiguration implements DataConfigurationInterface
 {
@@ -28,7 +28,7 @@ class DataConfiguration implements DataConfigurationInterface
     /**
      * Define all your Etl process here.
      *
-     * @param \Earls\OxPeckerDataBundle\Definition\Context $context
+     * @param \Cifren\OxPeckerDataBundle\Definition\Context $context
      *
      * @return array
      */
@@ -40,7 +40,7 @@ class DataConfiguration implements DataConfigurationInterface
     /**
      * Define all actions you want to execute before loading.
      *
-     * @param \Earls\OxPeckerDataBundle\Definition\Context $context
+     * @param \Cifren\OxPeckerDataBundle\Definition\Context $context
      */
     public function preProcess(Context $context)
     {
@@ -49,7 +49,7 @@ class DataConfiguration implements DataConfigurationInterface
     /**
      * Define all actions you want to execute after the process done.
      *
-     * @param \Earls\OxPeckerDataBundle\Definition\Context $context
+     * @param \Cifren\OxPeckerDataBundle\Definition\Context $context
      */
     public function postProcess(Context $context)
     {
@@ -58,7 +58,7 @@ class DataConfiguration implements DataConfigurationInterface
     /**
      * Define array of DataSources executed by DataSourceManager.
      *
-     * @param \Earls\OxPeckerDataBundle\Definition\Context $context
+     * @param \Cifren\OxPeckerDataBundle\Definition\Context $context
      *
      * @return array
      */
@@ -88,7 +88,7 @@ class DataConfiguration implements DataConfigurationInterface
      *
      * @param \Symfony\Bridge\Monolog\Logger $logger
      *
-     * @return \Earls\OxPeckerDataBundle\Definition\DataConfiguration
+     * @return \Cifren\OxPeckerDataBundle\Definition\DataConfiguration
      */
     public function setLogger(Logger $logger)
     {
@@ -109,12 +109,6 @@ class DataConfiguration implements DataConfigurationInterface
 
     protected function getDefaultOptions()
     {
-        if (!$this->defaultOptions) {
-            $this->defaultOptions = array(
-                'activate-flamingo' => false,
-            );
-        }
-
         return $this->defaultOptions;
     }
 
@@ -136,7 +130,7 @@ class DataConfiguration implements DataConfigurationInterface
     /**
      * @param EntityManager $entityManager
      *
-     * @return \Earls\OxPeckerDataBundle\Definition\DataConfiguration
+     * @return \Cifren\OxPeckerDataBundle\Definition\DataConfiguration
      */
     public function setEntityManager(EntityManager $entityManager)
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Earls\OxPeckerDataBundle\Command;
+namespace Cifren\OxPeckerDataBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Stopwatch\Stopwatch;

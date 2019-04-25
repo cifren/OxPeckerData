@@ -1,10 +1,9 @@
 parameters:
-    oxpecker.data.process.class:                    Earls\OxPeckerDataBundle\Core\DataProcess
+    oxpecker.data.process.class: Cifren\OxPeckerDataBundle\Core\DataProcess
 
-services:            
+services:
     oxpecker.data.process:
         class:      %oxpecker.data.process.class%
         arguments:
             - "@doctrine.orm.entity_manager"
             - "@logger"
-            - "@flamingo.stopwatch"

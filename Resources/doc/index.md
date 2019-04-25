@@ -10,7 +10,6 @@ Usage Documentation
 * [More Advanced data table](advancedConfig.md)
 * [Arguments](arguments.md)
 * [Events](event.md)
-* [FlamingoQueueCommand](flamingo.md)
 
 Developer Documentation
 =======================

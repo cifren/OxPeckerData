@@ -48,8 +48,8 @@ Create your `FirstReportDataConfiguration file` :
 
 namespace Project\DataTierBundle\OxPeckerConfiguration;
 
-use Earls\OxPeckerDataBundle\Definition\DataConfiguration;
-use Earls\OxPeckerDataBundle\Definition\Context;
+use Cifren\OxPeckerDataBundle\Definition\DataConfiguration;
+use Cifren\OxPeckerDataBundle\Definition\Context;
 
 /**
  *  Setup config
