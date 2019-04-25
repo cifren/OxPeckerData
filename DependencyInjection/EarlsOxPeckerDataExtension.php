@@ -1,13 +1,13 @@
 <?php
 
-namespace Earls\OxPeckerDataBundle\DependencyInjection;
+namespace Cifren\OxPeckerDataBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
-class EarlsOxPeckerDataExtension extends Extension
+class CifrenOxPeckerDataExtension extends Extension
 {
     /**
      * {@inheritdoc}
@@ -23,6 +23,6 @@ class EarlsOxPeckerDataExtension extends Extension
 
     public function getAlias()
     {
-        return 'earls_ox_pecker_data';
+        return 'cifren_ox_pecker_data';
     }
 }

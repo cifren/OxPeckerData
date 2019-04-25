@@ -1,18 +1,17 @@
 <?php
 
-namespace Earls\OxPeckerDataBundle\Core;
+namespace Cifren\OxPeckerDataBundle\Core;
 
-use Earls\OxPeckerDataBundle\Definition\DataConfigurationInterface;
+use Cifren\OxPeckerDataBundle\Definition\DataConfigurationInterface;
 use Knp\ETL\Context\Context;
 use Doctrine\ORM\EntityManager;
-use Earls\OxPeckerDataBundle\ETL\SQL\DataSource\DataSourceManager;
-use Earls\OxPeckerDataBundle\Definition\Context as DataProcessContext;
+use Cifren\OxPeckerDataBundle\ETL\SQL\DataSource\DataSourceManager;
+use Cifren\OxPeckerDataBundle\Definition\Context as DataProcessContext;
 use Symfony\Bridge\Monolog\Logger;
-use Earls\OxPeckerDataBundle\ETL\Core\SqlETLProcess;
-use Earls\FlamingoCommandQueueBundle\Model\StopwatchInterface;
+use Cifren\OxPeckerDataBundle\ETL\Core\SqlETLProcess;
 
 /**
- * Earls\OxPeckerDataBundle\Core\DataProcess.
+ * Cifren\OxPeckerDataBundle\Core\DataProcess.
  */
 class DataProcess
 {
@@ -47,7 +46,7 @@ class DataProcess
     /**
      * Process the data based on the configuration.
      *
-     * @param \Earls\OxPeckerDataBundle\Definition\DataConfigurationInterface $config
+     * @param \Cifren\OxPeckerDataBundle\Definition\DataConfigurationInterface $config
      * @param array                                                           $params
      */
     public function process(DataConfigurationInterface $config, array $params)
@@ -107,7 +106,7 @@ class DataProcess
      *
      * @param \Doctrine\ORM\EntityManager $entityManager
      *
-     * @return \Earls\OxPeckerDataBundle\Core\DataProcess
+     * @return \Cifren\OxPeckerDataBundle\Core\DataProcess
      */
     public function setEntityManager(EntityManager $entityManager)
     {
@@ -161,7 +160,7 @@ class DataProcess
      *
      * @param Logger $logger
      *
-     * @return \Earls\OxPeckerDataBundle\Core\DataProcess
+     * @return \Cifren\OxPeckerDataBundle\Core\DataProcess
      */
     public function setLogger(Logger $logger)
     {
@@ -171,9 +170,9 @@ class DataProcess
     }
 
     /**
-     * @param \Earls\OxPeckerDataBundle\ETL\SQL\DataSource\DataSourceManager $datasourceManager
+     * @param \Cifren\OxPeckerDataBundle\ETL\SQL\DataSource\DataSourceManager $datasourceManager
      *
-     * @return \Earls\OxPeckerDataBundle\Core\DataProcess
+     * @return \Cifren\OxPeckerDataBundle\Core\DataProcess
      */
     public function setDatasourceManager(DataSourceManager $datasourceManager)
     {

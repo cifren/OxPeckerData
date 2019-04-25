@@ -7,12 +7,12 @@ Your config :
 
 namespace Project\DataTierBundle\OxPeckerConfiguration;
 
-use Earls\OxPeckerDataBundle\Definition\DataConfiguration;
+use Cifren\OxPeckerDataBundle\Definition\DataConfiguration;
 use Doctrine\Bundle\DoctrineBundle\Registry;
-use Earls\OxPeckerDataBundle\DataSource\DataSourceManager;
-use Earls\OxPeckerDataBundle\Definition\Context;
+use Cifren\OxPeckerDataBundle\DataSource\DataSourceManager;
+use Cifren\OxPeckerDataBundle\Definition\Context;
 use Doctrine\ORM\EntityManager;
-use Earls\OxPeckerDataBundle\ETL\Core\SqlETLProcess;
+use Cifren\OxPeckerDataBundle\ETL\Core\SqlETLProcess;
 
 /**
  * config to create RptIngredientUsageDaily
@@ -53,7 +53,7 @@ class IngredientUsageDataConfiguration extends DataConfiguration
      * - Prepare weeks need to be updated, get last modified week limited to  self::MAX_YEAR_HISTORY, if args doesnt contain week_id
      * - Delete all items selected from arguments
      *
-     * @param \Earls\OxPeckerDataBundle\Definition\Context $context
+     * @param \Cifren\OxPeckerDataBundle\Definition\Context $context
      */
     public function preProcess(Context $context)
     {
@@ -87,7 +87,7 @@ class IngredientUsageDataConfiguration extends DataConfiguration
      *
      * The last Entity RptIngredientUsageDaily is the final form of the report table
      *
-     * @param  \Earls\OxPeckerDataBundle\Definition\Context       $context
+     * @param  \Cifren\OxPeckerDataBundle\Definition\Context       $context
      * @return array
      */
     public function getETLProcesses(Context $context)
@@ -156,7 +156,7 @@ class IngredientUsageDataConfiguration extends DataConfiguration
     /**
      * Delete all temporary tables used only to create RptIngredientUsageDaily
      *
-     * @param \Earls\OxPeckerDataBundle\Definition\Context $context
+     * @param \Cifren\OxPeckerDataBundle\Definition\Context $context
      */
     public function postProcess(Context $context)
     {
@@ -172,23 +172,7 @@ class IngredientUsageDataConfiguration extends DataConfiguration
         $dataSourceManager->dropTable('RptUsageSalesWithWeek');
         $dataSourceManager->dropTable('RptUsageSalesPerDay');
     }
-
-    //options, you can activate one action for now, which is Flamingo, if you want to Queue your command calls
-    protected setOptions(array $defaultOption)
-    {
-        return array(
-            'activate-flamingo' => true,
-        );
-    }
-
-    //this function define the name of the Queue Group for the bundle Flamingo
-    public function setQueueGroup($name, array $args)
-    {
-        $group = $name . (string) $args;
-
-        return $group;
-    }
-
+    
     //*********************************************************************
     //BACKGROUND FUNCTIONS AFTER THIS POINT, USEFUL ONLY FOR BUSINESS LOGIC
     //HERE ONLY FOR EXAMPLE
@@ -308,8 +292,8 @@ class IngredientUsageDataConfiguration extends DataConfiguration
     }
 
     //Depend on enity Manager selected, us or ca, will be earls or joeys or other, but always refering main database,
-    //for example if em=earlsus, name will be earlsus.pp_stockbook
-    //for example if em=earls, name will be earls.pp_stockbook
+    //for example if em=cifrensus, name will be cifrensus.pp_stockbook
+    //for example if em=cifren, name will be earls.pp_stockbook
     //for example if em=joeysus, name will be joeys.pp_stockbook
     protected function getTableName($entityName)
     {
@@ -415,5 +399,3 @@ class IngredientUsageDataConfiguration extends DataConfiguration
 }
 
 ```
-
-More information about [Flamingo](flamingo.md)
