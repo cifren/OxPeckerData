@@ -28,4 +28,15 @@
             </exclude>
         </whitelist>
     </filter>
+    <logging>
+        <log
+            type="coverage-html"
+            target="./build/logs/report/"
+            lowUpperBound="35"
+            highLowerBound="70"
+            showUncoveredFiles="true"
+        />
+        <log type="testdox-html" target="./build/logs/testdox.html" />
+        <log type="coverage-clover" target="./build/logs/clover.xml"/>
+    </logging>
 </phpunit>

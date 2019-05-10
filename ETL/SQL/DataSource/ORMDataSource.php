@@ -9,11 +9,11 @@ class ORMDataSource extends DataSource
     protected $entityName;
     protected $mapping;
     protected $query;
-    protected $options = array(
+    protected $options = [
         'dropOnInit' => true,
         'tableType' => ORMDataSourceType::REGULAR_TABLE,
         'commentMessage' => null,
-    );
+    ];
 
     /**
      * __construct.

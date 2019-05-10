@@ -14,7 +14,7 @@ class ArrayAlterationTransformer extends AlterationTransformer
         if (!is_array($array)) {
             throw new UnexpectedTypeException($array, 'array');
         }
-        $args = array_merge(array($array), $this->args);
+        $args = array_merge([$array], $this->args);
         $arrayTransformed = call_user_func_array($this->transformerFunction, $args);
 
         return $arrayTransformed;

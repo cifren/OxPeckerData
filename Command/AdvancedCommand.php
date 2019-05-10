@@ -25,7 +25,7 @@ abstract class AdvancedCommand extends ContainerAwareCommand
      */
     protected function getStopWatch()
     {
-        if ($this->getContainer()->has('debug.stopwatch') === false) {
+        if (false === $this->getContainer()->has('debug.stopwatch')) {
             $this->getContainer()->set('debug.stopwatch', new Stopwatch());
         }
 

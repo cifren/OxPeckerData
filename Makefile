@@ -7,6 +7,9 @@ php=$(runApp) php
 sh:
 	docker-compose exec oxpeckerdata bash
 
+build:
+	docker-compose build
+
 up:
 	docker-compose up
 
@@ -42,10 +45,10 @@ test.phpunit:
 test.phpunit:
 	$(php) vendor/bin/phpunit
 
-php_cs_fixer.diff:
+php-cs-fixer.diff:
 	$(php) vendor/bin/php-cs-fixer fix --config .php_cs --dry-run --diff
 
-php_cs_fixer.fix:
+php-cs-fixer.fix:
 	$(php) vendor/bin/php-cs-fixer fix --config .php_cs
 
 coverall:

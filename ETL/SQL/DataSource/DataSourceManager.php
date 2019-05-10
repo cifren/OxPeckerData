@@ -29,12 +29,12 @@ class DataSourceManager
     /**
      * @var type
      */
-    protected $derivedAliases = array();
+    protected $derivedAliases = [];
 
     /**
      * @var type
      */
-    protected $temporaryTableNames = array();
+    protected $temporaryTableNames = [];
 
     public function __construct(EntityManager $entityManager, LoggerInterface $logger)
     {
@@ -54,12 +54,12 @@ class DataSourceManager
 
         $this->getLogger()->notice(" - $entityName");
         $options = $dataSource->getOptions();
-        if ($options['tableType'] == ORMDataSourceType::REGULAR_TABLE && $options['dropOnInit']) {
+        if (ORMDataSourceType::REGULAR_TABLE == $options['tableType'] && $options['dropOnInit']) {
             $this->dropTable($entityName);
         }
 
-        if ($options['tableType'] != ORMDataSourceType::DERIVED_TABLE) {
-            $this->createTable($entityName, $options['tableType'] == ORMDataSourceType::TEMPORARY_TABLE);
+        if (ORMDataSourceType::DERIVED_TABLE != $options['tableType']) {
+            $this->createTable($entityName, ORMDataSourceType::TEMPORARY_TABLE == $options['tableType']);
             $this->insertTable($entityName, $dataSource->getQuery(), $dataSource->getMapping(), $options['commentMessage']);
         } else {
             $this->createDerivedAliases($entityName, $this->getSql($dataSource->getQuery()));
@@ -111,9 +111,9 @@ class DataSourceManager
             $this->temporaryTableNames[$entityName]['new'] = $newTableName;
         }
         $tool = new SchemaTool($this->getEntityManager());
-        $classes = array(
+        $classes = [
             $classMetaData,
-        );
+        ];
         $sql = $tool->getCreateSchemaSql($classes)[0];
 
         //if temporary table
@@ -163,7 +163,7 @@ class DataSourceManager
 
     protected function createDerivedAliases($entityName, $query)
     {
-        if (preg_match('/'.ORMDataSource::DERIVED_ALIAS.'/', $entityName) != true) {
+        if (true != preg_match('/'.ORMDataSource::DERIVED_ALIAS.'/', $entityName)) {
             throw new \Exception("The entityName '{$entityName}' should contain '".ORMDataSource::DERIVED_ALIAS."' at the beginning of the name");
         }
 
@@ -257,9 +257,9 @@ class DataSourceManager
     /**
      * getLogger.
      *
-     * @return \Symfony\Bridge\Monolog\Logger
-     *
      * @throws \Exception
+     *
+     * @return \Symfony\Bridge\Monolog\Logger
      */
     public function getLogger()
     {
@@ -303,8 +303,8 @@ class DataSourceManager
         }
 
         //clear all variables
-        $this->temporaryTableNames = array();
-        $this->derivedAliases = array();
+        $this->temporaryTableNames = [];
+        $this->derivedAliases = [];
         $this->uniqueId = uniqid();
     }
 }

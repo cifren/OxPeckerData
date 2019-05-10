@@ -34,7 +34,7 @@ class DataConfiguration implements DataConfigurationInterface
      */
     public function getETLProcesses(Context $context)
     {
-        return array();
+        return [];
     }
 
     /**
@@ -64,15 +64,15 @@ class DataConfiguration implements DataConfigurationInterface
      */
     public function getDataSources(Context $context)
     {
-        return array();
+        return [];
     }
 
     /**
      * getLogger.
      *
-     * @return \Symfony\Bridge\Monolog\Logger
-     *
      * @throws \Exception
+     *
+     * @return \Symfony\Bridge\Monolog\Logger
      */
     public function getLogger()
     {

@@ -15,7 +15,7 @@ class ObjectAlterationTransformer extends AlterationTransformer
             throw new UnexpectedTypeException($object, 'object');
         }
 
-        $args = array_merge(array($object), $this->args);
+        $args = array_merge([$object], $this->args);
         $objectFromFunction = call_user_func_array($this->transformerFunction, $args);
 
         if (!empty($objectFromFunction)) {
