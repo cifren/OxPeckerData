@@ -25,11 +25,5 @@
         "psr-0": { "Cifren\\OxPeckerDataBundle": "" }
     },
     "minimum-stability": "dev",
-    "target-dir": "Cifren/OxPeckerDataBundle",
-    "scripts": {
-        "php_fixer": "vendor/bin/php-cs-fixer fix --config-file .php_cs",
-        "lint": "vendor/bin/php-cs-fixer fix --config-file .php_cs --dry-run --diff",
-        "test": "vendor/bin/phpunit",
-        "coverall": "vendor/bin/coveralls -v"
-    }
+    "target-dir": "Cifren/OxPeckerDataBundle"
 }
