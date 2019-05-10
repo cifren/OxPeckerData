@@ -1,0 +1,7 @@
+version: '3.5'
+
+services:
+  oxpeckerdata:
+    image:  composer:latest
+    volumes:
+      - ".:/app"
