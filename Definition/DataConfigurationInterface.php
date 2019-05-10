@@ -8,9 +8,9 @@ use Symfony\Bridge\Monolog\Logger;
 interface DataConfigurationInterface
 {
     /**
-     * @return array
-     *
      * @param \Cifren\OxPeckerDataBundle\Definition\Context $context
+     *
+     * @return array
      */
     public function getDataSources(Context $context);
 

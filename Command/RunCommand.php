@@ -36,7 +36,7 @@ class RunCommand extends AdvancedCommand
             throw new \InvalidArgumentException(sprintf('Service has been found but the class is not an instance of \'Cifren\OxPeckerData\Report\SQLInterface\''));
         }
 
-        if (isset($input->getArgument('args')[0]) && $input->getArgument('args')[0] == 'help') {
+        if (isset($input->getArgument('args')[0]) && 'help' == $input->getArgument('args')[0]) {
             $this->helpDisplay($input->getArgument('namedatatier'), $dataTierConfig->setParamsMapping(), $output);
 
             return true;
@@ -88,7 +88,7 @@ class RunCommand extends AdvancedCommand
      */
     protected function helpDisplay($name, $mapping, OutputInterface $output)
     {
-        $parameterArgumentMessages = array();
+        $parameterArgumentMessages = [];
         if (!is_array($mapping)) {
             $parametersUsage = '[]';
             $parameterArgumentMessages[]['column1'] = 'No information are available';
@@ -127,13 +127,13 @@ class RunCommand extends AdvancedCommand
      * @param array $mappingArgs
      * @param array $args
      *
-     * @return array
-     *
      * @throws \Exception
+     *
+     * @return array
      */
     protected function formatArguments(array $mappingArgs = null, array $args)
     {
-        $formatedArgs = $mappingArgs ? $mappingArgs : array();
+        $formatedArgs = $mappingArgs ? $mappingArgs : [];
         foreach ($args as $arg) {
             $argumentExploded = explode('=', $arg);
 

@@ -33,11 +33,11 @@ class ORMLoader implements LoaderInterface, LoggableInterface
         $this->entityManager->persist($entity);
         ++$this->counter;
 
-        if ($this->counter % $this->flushEvery === 0) {
+        if (0 === $this->counter % $this->flushEvery) {
             $this->flush($context);
         }
 
-        if ($this->counter % $this->flushEvery === 0) {
+        if (0 === $this->counter % $this->flushEvery) {
             $this->clear($context);
         }
     }

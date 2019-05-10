@@ -47,7 +47,7 @@ class DataProcess
      * Process the data based on the configuration.
      *
      * @param \Cifren\OxPeckerDataBundle\Definition\DataConfigurationInterface $config
-     * @param array                                                           $params
+     * @param array                                                            $params
      */
     public function process(DataConfigurationInterface $config, array $params)
     {
@@ -142,9 +142,9 @@ class DataProcess
     /**
      * getLogger.
      *
-     * @return \Symfony\Bridge\Monolog\Logger
-     *
      * @throws \Exception
+     *
+     * @return \Symfony\Bridge\Monolog\Logger
      */
     public function getLogger()
     {
@@ -182,9 +182,9 @@ class DataProcess
     }
 
     /**
-     * @return DataSourceManager
-     *
      * @throws \Exception
+     *
+     * @return DataSourceManager
      */
     public function getDatasourceManager()
     {

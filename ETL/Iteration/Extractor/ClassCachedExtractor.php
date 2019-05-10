@@ -23,7 +23,7 @@ class ClassCachedExtractor implements ExtractorInterface, \Iterator, \Countable,
             throw new \Exception('The argument needs to be an object');
         }
 
-        $this->aryFunction = array($sourceObject, $functionName);
+        $this->aryFunction = [$sourceObject, $functionName];
         $this->args = $args;
     }
 

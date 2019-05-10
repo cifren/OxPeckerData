@@ -45,7 +45,7 @@ class AlterationTransformer implements TransformerInterface, LoggableInterface
             $this->transformerFunction = $arg1;
             $this->args = $arg2;
         } elseif (is_object($arg1)) { //if class and methodName
-            $this->transformerFunction = array($arg1, $arg2);
+            $this->transformerFunction = [$arg1, $arg2];
             $this->args = $arg3;
         } else {
             throw new UnexpectedTypeException($arg1, 'closure or object');
