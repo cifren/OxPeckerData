@@ -1,10 +1,10 @@
 <?php
 
-namespace Cifren\OxPeckerDataBundle\ETL\Core;
+namespace Cifren\OxPeckerData\ETL\Core;
 
-use Cifren\OxPeckerDataBundle\ETL\SQL\DataSource\ORMDataSource;
+use Cifren\OxPeckerData\ETL\SQL\DataSource\ORMDataSource;
 use Knp\ETL\ContextInterface;
-use Cifren\OxPeckerDataBundle\ETL\SQL\DataSource\DataSourceManager;
+use Cifren\OxPeckerData\ETL\SQL\DataSource\DataSourceManager;
 use Psr\Log\LoggerInterface;
 
 class SqlETLProcess implements ETLProcessInterface

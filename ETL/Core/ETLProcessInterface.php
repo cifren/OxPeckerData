@@ -1,6 +1,6 @@
 <?php
 
-namespace Cifren\OxPeckerDataBundle\ETL\Core;
+namespace Cifren\OxPeckerData\ETL\Core;
 
 use Knp\ETL\ContextInterface;
 use Psr\Log\LoggerInterface;

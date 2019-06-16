@@ -1,6 +1,6 @@
 <?php
 
-namespace Cifren\OxPeckerDataBundle\Definition;
+namespace Cifren\OxPeckerData\Definition;
 
 use Knp\ETL\Context\Context as baseContext;
 
@@ -27,7 +27,7 @@ class Context extends baseContext implements ContextInterface
     /**
      * @param array $args
      *
-     * @return \Cifren\OxPeckerDataBundle\Definition\Context
+     * @return \Cifren\OxPeckerData\Definition\Context
      */
     public function setArgs(array $args)
     {
@@ -47,7 +47,7 @@ class Context extends baseContext implements ContextInterface
     /**
      * @param array $etlProcesses
      *
-     * @return \Cifren\OxPeckerDataBundle\Definition\Context
+     * @return \Cifren\OxPeckerData\Definition\Context
      */
     public function setEtlProcesses(array $etlProcesses)
     {

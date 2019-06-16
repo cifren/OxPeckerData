@@ -1,11 +1,11 @@
 <?php
 
-namespace Cifren\OxPeckerDataBundle\ETL\Iteration\Transformer;
+namespace Cifren\OxPeckerData\ETL\Iteration\Transformer;
 
 use Knp\ETL\TransformerInterface;
 use Knp\ETL\Transformer\DataMap;
 use Knp\ETL\ContextInterface;
-use Cifren\OxPeckerDataBundle\ETL\Iteration\LoggableInterface;
+use Cifren\OxPeckerData\ETL\Iteration\LoggableInterface;
 use Psr\Log\LoggerInterface;
 
 class MappingTransformer implements TransformerInterface, LoggableInterface
@@ -39,7 +39,7 @@ class MappingTransformer implements TransformerInterface, LoggableInterface
     /**
      * @param LoggerInterface $logger
      *
-     * @return \Cifren\OxPeckerDataBundle\ETL\Iteration\Transformer\ObjectAlterationTransformer
+     * @return MappingTransformer
      */
     public function setLogger(LoggerInterface $logger)
     {

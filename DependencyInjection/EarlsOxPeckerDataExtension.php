@@ -1,6 +1,6 @@
 <?php
 
-namespace Cifren\OxPeckerDataBundle\DependencyInjection;
+namespace Cifren\OxPeckerData\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Loader;

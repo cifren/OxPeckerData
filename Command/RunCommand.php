@@ -1,15 +1,15 @@
 <?php
 
-namespace Cifren\OxPeckerDataBundle\Command;
+namespace Cifren\OxPeckerData\Command;
 
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Cifren\OxPeckerDataBundle\Definition\DataConfigurationInterface;
-use Cifren\OxPeckerDataBundle\Dispatcher\RunCommandEvent;
+use Cifren\OxPeckerData\Definition\DataConfigurationInterface;
+use Cifren\OxPeckerData\Dispatcher\RunCommandEvent;
 
 /**
- * Cifren\OxPeckerDataBundle\Command\RunCommand.
+ * Cifren\OxPeckerData\Command\RunCommand.
  */
 class RunCommand extends AdvancedCommand
 {

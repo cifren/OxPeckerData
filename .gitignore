@@ -1,8 +1,11 @@
+# Symfony
 composer.lock
 vendor/
 Tests/var/
 build/
+bin/
 
-.idea
+# IDE
+.idea/
 .php_cs.cache
 .phpunit.result.cache

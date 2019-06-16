@@ -1,17 +1,17 @@
 <?php
 
-namespace Cifren\OxPeckerDataBundle\Core;
+namespace Cifren\OxPeckerData\Core;
 
-use Cifren\OxPeckerDataBundle\Definition\DataConfigurationInterface;
+use Cifren\OxPeckerData\Definition\DataConfigurationInterface;
 use Knp\ETL\Context\Context;
 use Doctrine\ORM\EntityManager;
-use Cifren\OxPeckerDataBundle\ETL\SQL\DataSource\DataSourceManager;
-use Cifren\OxPeckerDataBundle\Definition\Context as DataProcessContext;
+use Cifren\OxPeckerData\ETL\SQL\DataSource\DataSourceManager;
+use Cifren\OxPeckerData\Definition\Context as DataProcessContext;
 use Symfony\Bridge\Monolog\Logger;
-use Cifren\OxPeckerDataBundle\ETL\Core\SqlETLProcess;
+use Cifren\OxPeckerData\ETL\Core\SqlETLProcess;
 
 /**
- * Cifren\OxPeckerDataBundle\Core\DataProcess.
+ * Cifren\OxPeckerData\Core\DataProcess.
  */
 class DataProcess
 {
@@ -46,7 +46,7 @@ class DataProcess
     /**
      * Process the data based on the configuration.
      *
-     * @param \Cifren\OxPeckerDataBundle\Definition\DataConfigurationInterface $config
+     * @param \Cifren\OxPeckerData\Definition\DataConfigurationInterface $config
      * @param array                                                            $params
      */
     public function process(DataConfigurationInterface $config, array $params)
@@ -106,7 +106,7 @@ class DataProcess
      *
      * @param \Doctrine\ORM\EntityManager $entityManager
      *
-     * @return \Cifren\OxPeckerDataBundle\Core\DataProcess
+     * @return \Cifren\OxPeckerData\Core\DataProcess
      */
     public function setEntityManager(EntityManager $entityManager)
     {
@@ -160,7 +160,7 @@ class DataProcess
      *
      * @param Logger $logger
      *
-     * @return \Cifren\OxPeckerDataBundle\Core\DataProcess
+     * @return \Cifren\OxPeckerData\Core\DataProcess
      */
     public function setLogger(Logger $logger)
     {
@@ -170,9 +170,9 @@ class DataProcess
     }
 
     /**
-     * @param \Cifren\OxPeckerDataBundle\ETL\SQL\DataSource\DataSourceManager $datasourceManager
+     * @param \Cifren\OxPeckerData\ETL\SQL\DataSource\DataSourceManager $datasourceManager
      *
-     * @return \Cifren\OxPeckerDataBundle\Core\DataProcess
+     * @return \Cifren\OxPeckerData\Core\DataProcess
      */
     public function setDatasourceManager(DataSourceManager $datasourceManager)
     {

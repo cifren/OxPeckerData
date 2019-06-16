@@ -1,6 +1,6 @@
 <?php
 
-namespace Cifren\OxPeckerDataBundle\ETL\SQL\DataSource;
+namespace Cifren\OxPeckerData\ETL\SQL\DataSource;
 
 use Doctrine\ORM\Tools\SchemaTool;
 use Doctrine\ORM\Mapping\ClassMetadata;
@@ -46,7 +46,7 @@ class DataSourceManager
     /**
      * createTableFromDataSource.
      *
-     * @param \Cifren\OxPeckerDataBundle\DataSource\ORMDataSource $dataSource
+     * @param \Cifren\OxPeckerData\DataSource\ORMDataSource $dataSource
      */
     public function processDataSource(ORMDataSource $dataSource)
     {
@@ -202,7 +202,7 @@ class DataSourceManager
     /**
      * @param \Doctrine\ORM\EntityManager $entityManager
      *
-     * @return \Cifren\OxPeckerDataBundle\DataSource\DataSourceManager
+     * @return \Cifren\OxPeckerData\DataSource\DataSourceManager
      */
     public function setEntityManager(EntityManager $entityManager)
     {
@@ -275,7 +275,7 @@ class DataSourceManager
      *
      * @param LoggerInterface $logger
      *
-     * @return \Cifren\OxPeckerDataBundle\DataSource\DataSourceManager
+     * @return \Cifren\OxPeckerData\DataSource\DataSourceManager
      */
     public function setLogger(LoggerInterface $logger)
     {

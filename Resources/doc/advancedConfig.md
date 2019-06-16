@@ -7,12 +7,12 @@ Your config :
 
 namespace Project\DataTierBundle\OxPeckerConfiguration;
 
-use Cifren\OxPeckerDataBundle\Definition\DataConfiguration;
+use Cifren\OxPeckerData\Definition\DataConfiguration;
 use Doctrine\Bundle\DoctrineBundle\Registry;
-use Cifren\OxPeckerDataBundle\DataSource\DataSourceManager;
-use Cifren\OxPeckerDataBundle\Definition\Context;
+use Cifren\OxPeckerData\DataSource\DataSourceManager;
+use Cifren\OxPeckerData\Definition\Context;
 use Doctrine\ORM\EntityManager;
-use Cifren\OxPeckerDataBundle\ETL\Core\SqlETLProcess;
+use Cifren\OxPeckerData\ETL\Core\SqlETLProcess;
 
 /**
  * config to create RptIngredientUsageDaily
@@ -53,7 +53,7 @@ class IngredientUsageDataConfiguration extends DataConfiguration
      * - Prepare weeks need to be updated, get last modified week limited to  self::MAX_YEAR_HISTORY, if args doesnt contain week_id
      * - Delete all items selected from arguments
      *
-     * @param \Cifren\OxPeckerDataBundle\Definition\Context $context
+     * @param \Cifren\OxPeckerData\Definition\Context $context
      */
     public function preProcess(Context $context)
     {
@@ -87,7 +87,7 @@ class IngredientUsageDataConfiguration extends DataConfiguration
      *
      * The last Entity RptIngredientUsageDaily is the final form of the report table
      *
-     * @param  \Cifren\OxPeckerDataBundle\Definition\Context       $context
+     * @param  \Cifren\OxPeckerData\Definition\Context       $context
      * @return array
      */
     public function getETLProcesses(Context $context)
@@ -156,7 +156,7 @@ class IngredientUsageDataConfiguration extends DataConfiguration
     /**
      * Delete all temporary tables used only to create RptIngredientUsageDaily
      *
-     * @param \Cifren\OxPeckerDataBundle\Definition\Context $context
+     * @param \Cifren\OxPeckerData\Definition\Context $context
      */
     public function postProcess(Context $context)
     {

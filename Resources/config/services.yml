@@ -1,5 +1,5 @@
 parameters:
-    oxpecker.data.process.class: Cifren\OxPeckerDataBundle\Core\DataProcess
+    oxpecker.data.process.class: Cifren\OxPeckerData\Core\DataProcess
 
 services:
     oxpecker.data.process:

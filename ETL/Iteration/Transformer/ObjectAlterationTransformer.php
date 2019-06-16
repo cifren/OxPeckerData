@@ -1,6 +1,6 @@
 <?php
 
-namespace Cifren\OxPeckerDataBundle\ETL\Iteration\Transformer;
+namespace Cifren\OxPeckerData\ETL\Iteration\Transformer;
 
 use Knp\ETL\ContextInterface;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;

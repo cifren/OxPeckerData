@@ -1,10 +1,10 @@
 <?php
 
-namespace Cifren\OxPeckerDataBundle\Definition;
+namespace Cifren\OxPeckerData\Definition;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Bridge\Monolog\Logger;
-use Cifren\OxPeckerDataBundle\ETL\SQL\DataSource\ORMDataSource;
+use Cifren\OxPeckerData\ETL\SQL\DataSource\ORMDataSource;
 
 class DataConfiguration implements DataConfigurationInterface
 {
@@ -28,7 +28,7 @@ class DataConfiguration implements DataConfigurationInterface
     /**
      * Define all your Etl process here.
      *
-     * @param \Cifren\OxPeckerDataBundle\Definition\Context $context
+     * @param \Cifren\OxPeckerData\Definition\Context $context
      *
      * @return array
      */
@@ -40,7 +40,7 @@ class DataConfiguration implements DataConfigurationInterface
     /**
      * Define all actions you want to execute before loading.
      *
-     * @param \Cifren\OxPeckerDataBundle\Definition\Context $context
+     * @param \Cifren\OxPeckerData\Definition\Context $context
      */
     public function preProcess(Context $context)
     {
@@ -49,7 +49,7 @@ class DataConfiguration implements DataConfigurationInterface
     /**
      * Define all actions you want to execute after the process done.
      *
-     * @param \Cifren\OxPeckerDataBundle\Definition\Context $context
+     * @param \Cifren\OxPeckerData\Definition\Context $context
      */
     public function postProcess(Context $context)
     {
@@ -58,7 +58,7 @@ class DataConfiguration implements DataConfigurationInterface
     /**
      * Define array of DataSources executed by DataSourceManager.
      *
-     * @param \Cifren\OxPeckerDataBundle\Definition\Context $context
+     * @param \Cifren\OxPeckerData\Definition\Context $context
      *
      * @return array
      */
@@ -88,7 +88,7 @@ class DataConfiguration implements DataConfigurationInterface
      *
      * @param \Symfony\Bridge\Monolog\Logger $logger
      *
-     * @return \Cifren\OxPeckerDataBundle\Definition\DataConfiguration
+     * @return \Cifren\OxPeckerData\Definition\DataConfiguration
      */
     public function setLogger(Logger $logger)
     {
@@ -130,7 +130,7 @@ class DataConfiguration implements DataConfigurationInterface
     /**
      * @param EntityManager $entityManager
      *
-     * @return \Cifren\OxPeckerDataBundle\Definition\DataConfiguration
+     * @return \Cifren\OxPeckerData\Definition\DataConfiguration
      */
     public function setEntityManager(EntityManager $entityManager)
     {

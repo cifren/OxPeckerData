@@ -1,6 +1,6 @@
 <?php
 
-namespace Cifren\OxPeckerDataBundle\Dispatcher;
+namespace Cifren\OxPeckerData\Dispatcher;
 
 use Symfony\Component\EventDispatcher\Event;
 

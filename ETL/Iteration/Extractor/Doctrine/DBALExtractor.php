@@ -1,14 +1,14 @@
 <?php
 
-namespace Cifren\OxPeckerDataBundle\ETL\Iteration\Extractor\Doctrine;
+namespace Cifren\OxPeckerData\ETL\Iteration\Extractor\Doctrine;
 
 use Knp\ETL\Extractor\Doctrine\ORMExtractor as BaseExtractor;
 use Knp\ETL\ContextInterface;
-use Cifren\OxPeckerDataBundle\ETL\Iteration\LoggableInterface;
+use Cifren\OxPeckerData\ETL\Iteration\LoggableInterface;
 use Psr\Log\LoggerInterface;
 
 /**
- * Cifren\OxPeckerDataBundle\ETL\Extractor\Doctrine\ORMEXtractor.
+ * Cifren\OxPeckerData\ETL\Extractor\Doctrine\ORMEXtractor.
  */
 class DBALExtractor extends BaseExtractor implements LoggableInterface
 {
@@ -66,7 +66,7 @@ class DBALExtractor extends BaseExtractor implements LoggableInterface
     /**
      * @param LoggerInterface $logger
      *
-     * @return \Cifren\OxPeckerDataBundle\ETL\Iteration\Transformer\ObjectAlterationTransformer
+     * @return DBALExtractor
      */
     public function setLogger(LoggerInterface $logger)
     {

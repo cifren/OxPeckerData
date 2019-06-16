@@ -1,55 +1,26 @@
-runApp=docker-compose run --rm oxpeckerdata
-composer=$(runApp) composer
-php=$(runApp) php
+## Variables
+dkcp=docker-compose
+dk_run=$(dkcp) run --rm
+dk_composer=$(dk_run) composer
+cmd_composer=$(dk_composer) composer
+dk_php_ap=$(dk_run) php
+cmd_phpunit=$(dk_php_ap) bin/phpunit
 
-#---------------------------------------------------------------
+## Init project
+install:
+	$(composer) install
 
-sh:
-	docker-compose exec oxpeckerdata bash
-
-build:
-	docker-compose build
-
+## Apache
 up:
-	docker-compose up
+	$(dkcp) up -d
 
 down:
-	docker-compose down --remove-orphans
+	$(dkcp) down --remove-orphans
 
 restart: down up
 
-state:
-	docker-compose ps
+## Php
+phpunit:
+	$(cmd_phpunit)
 
-composer.install:
-	$(composer) install
 
-composer.update:
-	$(composer) update
-
-install: up composer.install
-
-update: up composer.update
-
-composer.version:
-	$(composer) --version
-
-php.version:
-	$(php) -v
-
-version: composer.version php.version
-
-test.phpunit:
-	$(php) vendor/bin/phpunit
-
-test.phpunit:
-	$(php) vendor/bin/phpunit
-
-php-cs-fixer.diff:
-	$(php) vendor/bin/php-cs-fixer fix --config .php_cs --dry-run --diff
-
-php-cs-fixer.fix:
-	$(php) vendor/bin/php-cs-fixer fix --config .php_cs
-
-coverall:
-	$(php) vendor/bin/coveralls -v

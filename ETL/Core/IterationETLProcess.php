@@ -1,13 +1,13 @@
 <?php
 
-namespace Cifren\OxPeckerDataBundle\ETL\Core;
+namespace Cifren\OxPeckerData\ETL\Core;
 
 use Knp\ETL\ExtractorInterface;
 use Knp\ETL\TransformerInterface;
 use Knp\ETL\LoaderInterface;
 use Knp\ETL\ContextInterface;
 use Psr\Log\LoggerInterface;
-use Cifren\OxPeckerDataBundle\ETL\Iteration\LoggableInterface;
+use Cifren\OxPeckerData\ETL\Iteration\LoggableInterface;
 
 class IterationETLProcess implements ETLProcessInterface, LoggableInterface
 {

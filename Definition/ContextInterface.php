@@ -1,6 +1,6 @@
 <?php
 
-namespace Cifren\OxPeckerDataBundle\Definition;
+namespace Cifren\OxPeckerData\Definition;
 
 use Knp\ETL\ContextInterface as baseContextInterface;
 

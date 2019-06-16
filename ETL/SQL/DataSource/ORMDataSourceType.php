@@ -1,6 +1,6 @@
 <?php
 
-namespace Cifren\OxPeckerDataBundle\ETL\SQL\DataSource;
+namespace Cifren\OxPeckerData\ETL\SQL\DataSource;
 
 class ORMDataSourceType extends DataSource
 {

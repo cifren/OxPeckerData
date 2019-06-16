@@ -1,10 +1,14 @@
-version: '3.5'
+version: '3.7'
 
 services:
-  oxpeckerdata:
-#    build:
-#      context: .
-#      dockerfile: ./Dockerfile
+  php:
+    image: php:7.3.6-fpm
+    volumes:
+      - "./:/var/www/html"
+    ports:
+      - "80:80"
+
+  composer:
     image: composer:latest
     volumes:
-      - ".:/app"
+      - "./:/app"

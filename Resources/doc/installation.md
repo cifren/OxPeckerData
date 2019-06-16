@@ -26,7 +26,7 @@ Register the bundle with your `kernel`:
 // in AppKernel::registerBundles()
 $bundles = array(
     // ...
-    new Cifren\OxPeckerDataBundle\CifrenOxPeckerDataBundle(),
+    new Cifren\OxPeckerData\CifrenOxPeckerData(),
     // ...
 );
 ```

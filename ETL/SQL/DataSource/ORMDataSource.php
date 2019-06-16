@@ -1,6 +1,6 @@
 <?php
 
-namespace Cifren\OxPeckerDataBundle\ETL\SQL\DataSource;
+namespace Cifren\OxPeckerData\ETL\SQL\DataSource;
 
 class ORMDataSource extends DataSource
 {
@@ -68,7 +68,7 @@ class ORMDataSource extends DataSource
      *
      * @param string $entityName
      *
-     * @return \Cifren\OxPeckerDataBundle\DataSource\ORMDataSource
+     * @return \Cifren\OxPeckerData\DataSource\ORMDataSource
      */
     public function setEntityName($entityName)
     {
@@ -82,7 +82,7 @@ class ORMDataSource extends DataSource
      *
      * @param array $mapping
      *
-     * @return \Cifren\OxPeckerDataBundle\DataSource\ORMDataSource
+     * @return \Cifren\OxPeckerData\DataSource\ORMDataSource
      */
     public function setMapping(array $mapping)
     {
@@ -96,7 +96,7 @@ class ORMDataSource extends DataSource
      *
      * @param string|\Doctrine\ORM\Query|\Doctrine\ORM\QueryBuilder $query
      *
-     * @return \Cifren\OxPeckerDataBundle\DataSource\ORMDataSource
+     * @return \Cifren\OxPeckerData\DataSource\ORMDataSource
      */
     public function setQuery($query)
     {
@@ -120,7 +120,7 @@ class ORMDataSource extends DataSource
      *
      * @param array $options
      *
-     * @return \Cifren\OxPeckerDataBundle\DataSource\ORMDataSource
+     * @return \Cifren\OxPeckerData\DataSource\ORMDataSource
      */
     public function setOptions(array $options)
     {

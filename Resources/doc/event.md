@@ -46,7 +46,7 @@ Here is your listener.
 
 ```php
     namespace Acme\Bundle\ExampleBundle;  
-    use Cifren\OxPeckerDataBundle\Dispatcher\RunCommandEvent; 
+    use Cifren\OxPeckerData\Dispatcher\RunCommandEvent; 
      
     class CommandListener
     {

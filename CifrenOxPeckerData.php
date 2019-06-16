@@ -1,6 +1,6 @@
 <?php
 
-namespace Cifren\OxPeckerDataBundle;
+namespace Cifren\OxPeckerData;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

@@ -1,11 +1,11 @@
 <?php
 
-namespace Cifren\OxPeckerDataBundle\ETL\Iteration;
+namespace Cifren\OxPeckerData\ETL\Iteration;
 
 use Psr\Log\LoggerInterface;
 
 /**
- * Cifren\OxPeckerDataBundle\ETL\Iteration\LoggableInterface.
+ * Cifren\OxPeckerData\ETL\Iteration\LoggableInterface.
  */
 interface LoggableInterface
 {

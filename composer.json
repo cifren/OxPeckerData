@@ -22,8 +22,15 @@
         "php-coveralls/php-coveralls": "^2.1"
     },
     "autoload":     {
-        "psr-0": { "Cifren\\OxPeckerDataBundle": "" }
+        "psr-0": { "Cifren\\OxPeckerData": "" }
     },
     "minimum-stability": "dev",
-    "target-dir": "Cifren/OxPeckerDataBundle"
+    "target-dir": "Cifren/OxPeckerData",    
+    "config": {
+        "bin-dir": "bin",
+        "preferred-install": {
+            "*": "dist"
+        },
+        "sort-packages": true
+    }
 }
