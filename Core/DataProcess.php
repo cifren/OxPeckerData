@@ -46,8 +46,8 @@ class DataProcess
     /**
      * Process the data based on the configuration.
      *
-     * @param \Cifren\OxPeckerData\Definition\DataConfigurationInterface $config
-     * @param array                                                            $params
+     * @param DataConfigurationInterface $config
+     * @param array $params
      */
     public function process(DataConfigurationInterface $config, array $params)
     {
@@ -104,9 +104,9 @@ class DataProcess
     /**
      * setEntityManager.
      *
-     * @param \Doctrine\ORM\EntityManager $entityManager
+     * @param EntityManager $entityManager
      *
-     * @return \Cifren\OxPeckerData\Core\DataProcess
+     * @return DataProcess
      */
     public function setEntityManager(EntityManager $entityManager)
     {
@@ -144,7 +144,7 @@ class DataProcess
      *
      * @throws \Exception
      *
-     * @return \Symfony\Bridge\Monolog\Logger
+     * @return Logger
      */
     public function getLogger()
     {
@@ -160,7 +160,7 @@ class DataProcess
      *
      * @param Logger $logger
      *
-     * @return \Cifren\OxPeckerData\Core\DataProcess
+     * @return DataProcess
      */
     public function setLogger(Logger $logger)
     {
@@ -170,9 +170,9 @@ class DataProcess
     }
 
     /**
-     * @param \Cifren\OxPeckerData\ETL\SQL\DataSource\DataSourceManager $datasourceManager
+     * @param DataSourceManager $datasourceManager
      *
-     * @return \Cifren\OxPeckerData\Core\DataProcess
+     * @return DataProcess
      */
     public function setDatasourceManager(DataSourceManager $datasourceManager)
     {
