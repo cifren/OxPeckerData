@@ -35,8 +35,11 @@ class DataProcess
      */
     protected $stopWatch;
 
-    public function __construct(EntityManager $entityManager, Logger $logger, StopwatchInterface $stopWatch)
-    {
+    public function __construct(
+            EntityManager $entityManager, 
+            Logger $logger, 
+            StopwatchInterface $stopWatch
+    ) {
         $this->entityManager = $entityManager;
         $this->logger = $logger;
         $this->dataSourceManager = new DataSourceManager($entityManager, $logger);
@@ -58,7 +61,14 @@ class DataProcess
         $this->stopWatch->start('preProcess');
         $config->preProcess($dataProcessContext);
         $this->stopWatch->stop('preProcess');
-        $this->getLogger()->notice(sprintf('Executed in %s', $this->stopWatch->getFinishTime('preProcess')->format('%hh %im %ss')));
+        $this
+            ->getLogger()
+            ->notice(sprintf(
+                    'Executed in %s', 
+                    $this->stopWatch
+                        ->getFinishTime('preProcess')
+                        ->format('%hh %im %ss')
+            ));
         if ($config->getEntityManager()) {
             $this->setEntityManager($config->getEntityManager());
         }
@@ -74,7 +84,12 @@ class DataProcess
         $this->stopWatch->start('postProcess');
         $config->postProcess($dataProcessContext);
         $this->stopWatch->stop('postProcess');
-        $this->getLogger()->notice(sprintf('Executed in %s', $this->stopWatch->getFinishTime('postProcess')->format('%hh %im %ss')));
+        $this->getLogger()->notice(sprintf(
+            'Executed in %s', 
+            $this->stopWatch
+                ->getFinishTime('postProcess')
+                ->format('%hh %im %ss')
+        ));
     }
 
     /**
@@ -96,7 +111,12 @@ class DataProcess
             $this->stopWatch->start('etlProcess');
             $etlProcess->process();
             $this->stopWatch->stop('etlProcess');
-            $this->getLogger()->notice(sprintf('Executed in %s', $this->stopWatch->getFinishTime('etlProcess')->format('%hh %im %ss')));
+            $this->getLogger()->notice(sprintf(
+                'Executed in %s', 
+                $this->stopWatch
+                    ->getFinishTime('etlProcess')
+                    ->format('%hh %im %ss')
+            ));
         }
         $this->getDatasourceManager()->clear();
     }
