@@ -3,8 +3,8 @@ dkcp=docker-compose
 dk_run=$(dkcp) run --rm
 dk_composer=$(dk_run) composer
 cmd_composer=$(dk_composer) composer
-dk_php_ap=$(dk_run) php
-cmd_phpunit=$(dk_php_ap) bin/phpunit
+cmd_php=$(dk_run) php
+cmd_phpunit=$(cmd_php) bin/phpunit
 
 ## Init project
 install:
@@ -22,5 +22,16 @@ restart: down up
 ## Php
 phpunit:
 	$(cmd_phpunit)
+
+### PHP CS Fixer ###
+
+cmd_phpcsfixer=$(cmd_php) bin/php-cs-fixer
+
+php-cs-fixer.fix:
+	$(cmd_phpcsfixer) fix
+
+php-cs-fixer.diff:
+	$(cmd_phpcsfixer) cmd_phpcsfixer fix -v --diff --dry-run"
+####################
 
 

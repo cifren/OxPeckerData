@@ -47,7 +47,7 @@ class DataProcess
      * Process the data based on the configuration.
      *
      * @param DataConfigurationInterface $config
-     * @param array $params
+     * @param array                      $params
      */
     public function process(DataConfigurationInterface $config, array $params)
     {
