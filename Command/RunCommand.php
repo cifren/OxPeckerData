@@ -17,34 +17,54 @@ class RunCommand extends AdvancedCommand
     {
         parent::configure();
         $this
-                ->setName('oxpecker:run')
-                ->setDescription('Run your data tier config, generate easily your data for report or data center or import')
-                ->addArgument('namedatatier', InputArgument::REQUIRED, 'Which data tier config do you want execute')
-                ->addArgument('args', InputArgument::IS_ARRAY, 'Add all arguments this command needs');
+            ->setName('oxpecker:run')
+            ->setDescription('Run your data tier config, generate easily your '
+                . 'data for report or data center or import')
+            ->addArgument('namedatatier', InputArgument::REQUIRED, 'Which data '
+                . 'tier config do you want execute')
+            ->addArgument('args', InputArgument::IS_ARRAY, 'Add all arguments '
+                . 'this command needs');
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $container = $this->getContainer();
 
-        $this->getLogger()->notice("Process {$input->getArgument('namedatatier')}");
-        $dataTierConfig = $container->get($input->getArgument('namedatatier'));
+        $datatierName = $input->getArgument('namedatatier');
+        $this->getLogger()->notice("Process {$datatierName}");
+        $dataTierConfig = $container->get($datatierName);
         $dataTierConfig->setLogger($this->getLogger());
         if (!$dataTierConfig) {
-            throw new \InvalidArgumentException(sprintf('No data tier configuration has been find with name \'%s\' ', $input->getArgument('namedatatier')));
+            throw new \InvalidArgumentException(sprintf(
+                'No data tier configuration has been find with name \'%s\' ', 
+                $datatierName
+            ));
         } elseif (!$dataTierConfig instanceof DataConfigurationInterface) {
-            throw new \InvalidArgumentException(sprintf('Service has been found but the class is not an instance of \'Cifren\OxPeckerData\Report\SQLInterface\''));
+            throw new \InvalidArgumentException(sprintf(
+                'Service has been found but the class is not an instance of '
+                    . '\'Cifren\OxPeckerData\Report\SQLInterface\''
+            ));
         }
 
-        if (isset($input->getArgument('args')[0]) && 'help' == $input->getArgument('args')[0]) {
-            $this->helpDisplay($input->getArgument('namedatatier'), $dataTierConfig->setParamsMapping(), $output);
+        if (
+            isset($input->getArgument('args')[0])
+            && 'help' == $input->getArgument('args')[0]
+        ) {
+            $this->helpDisplay(
+                $datatierName, 
+                $dataTierConfig->setParamsMapping(), 
+                $output
+            );
 
             return true;
         }
-        $args = $this->formatArguments($dataTierConfig->setParamsMapping(), $input->getArgument('args'));
+        $args = $this->formatArguments(
+            $dataTierConfig->setParamsMapping(), 
+            $input->getArgument('args')
+        );
 
         //log system
-        $this->startScript($dataTierConfig, $input->getArgument('namedatatier'), $args);
+        $this->startScript($datatierName, $args);
 
         $dataProcess = $this->getContainer()->get('oxpecker.data.process');
         $dataProcess->setLogger($this->getLogger());
@@ -55,22 +75,21 @@ class RunCommand extends AdvancedCommand
         } catch (\Exception $e) {
             $errorSignal = true;
             $dataTierConfigOptions = $dataTierConfig->getOptions();
-            $this->stopScript($dataTierConfig, $errorSignal, $input->getArgument('namedatatier'), $args);
+            $this->stopScript($datatierName, $args);
         }
         //log system
-        $this->stopScript($dataTierConfig, $errorSignal, $input->getArgument('namedatatier'), $args);
+        $this->stopScript($dataTierConfig, $errorSignal, $datatierName, $args);
 
         return true;
     }
 
-    protected function startScript(DataConfigurationInterface $dataTierConfig, $name, array $args)
+    protected function startScript(array $args)
     {
         $this->setStartTime();
         $this->getLogger()->notice('Arguments: '.$this->getImplodeArguments($args));
-        $dataTierConfigOptions = $dataTierConfig->getOptions();
     }
 
-    protected function stopScript(DataConfigurationInterface $dataTierConfig, $errorSignal, $name, $args)
+    protected function stopScript($name, $args)
     {
         $this->setEndTime();
         $this->noticeTime();
@@ -100,7 +119,8 @@ class RunCommand extends AdvancedCommand
             $i = 0;
             foreach ($mapping as $key => $map) {
                 $parameterArgumentMessages[$i]['column1'] = "<fg=green>$key</fg=green>";
-                $parameterArgumentMessages[$i]['column2'] = $map ? "<fg=yellow>default: $map</fg=yellow>" : null;
+                $parameterArgumentMessages[$i]['column2'] = 
+                    $map ? "<fg=yellow>default: $map</fg=yellow>" : null;
                 ++$i;
             }
         }
@@ -111,18 +131,24 @@ class RunCommand extends AdvancedCommand
         $output->writeln('<fg=yellow>Arguments</fg=yellow>');
         foreach ($parameterArgumentMessages as $parameterArgumentMessage) {
             $message = " {$parameterArgumentMessage['column1']}";
-            $message .= isset($parameterArgumentMessage['column2']) ? '      '.$parameterArgumentMessage['column2'] : null;
+            $message .= isset($parameterArgumentMessage['column2']) ? 
+                '      '.$parameterArgumentMessage['column2'] : null;
             $output->writeln($message);
         }
         $output->writeln('');
     }
 
     /**
-     * Format arguments in order to contain default from config and return an array of arguments from the input.
+     * Format arguments in order to contain default from config and return an 
+     * array of arguments from the input.
      *
      * If mapping is null, means no arguments required
-     * If mapping is an empty array, means no arguments required and throw issue if there is
-     * If mapping is an array, system will control each argument, throw issue if argument not in the list come from input
+     * 
+     * If mapping is an empty array, means no arguments required and throw issue 
+     * if there is
+     * 
+     * If mapping is an array, system will control each argument, throw issue 
+     * if argument not in the list come from input
      *
      * @param array $mappingArgs
      * @param array $args
@@ -141,8 +167,14 @@ class RunCommand extends AdvancedCommand
             if (count($argumentExploded) < 2) {
                 continue;
             }
-            if (is_array($mappingArgs) && !in_array($argumentExploded[0], array_keys($mappingArgs))) {
-                throw new \Exception("The argument '{$argumentExploded[0]}' is not part of the mapping defined in configuration");
+            if (
+                is_array($mappingArgs) 
+                && !in_array($argumentExploded[0], array_keys($mappingArgs))
+            ) {
+                throw new \Exception(
+                    "The argument '{$argumentExploded[0]}' is not part of the "
+                    . "mapping defined in configuration"
+                );
             }
             $formatedArgs[$argumentExploded[0]] = $argumentExploded[1];
         }
