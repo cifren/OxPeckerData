@@ -19,11 +19,11 @@ class RunCommand extends AdvancedCommand
         $this
             ->setName('oxpecker:run')
             ->setDescription('Run your data tier config, generate easily your '
-                . 'data for report or data center or import')
+                .'data for report or data center or import')
             ->addArgument('namedatatier', InputArgument::REQUIRED, 'Which data '
-                . 'tier config do you want execute')
+                .'tier config do you want execute')
             ->addArgument('args', InputArgument::IS_ARRAY, 'Add all arguments '
-                . 'this command needs');
+                .'this command needs');
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
@@ -34,62 +34,43 @@ class RunCommand extends AdvancedCommand
         $this->getLogger()->notice("Process {$datatierName}");
         $dataTierConfig = $container->get($datatierName);
         $dataTierConfig->setLogger($this->getLogger());
-        if (!$dataTierConfig) {
-            throw new \InvalidArgumentException(sprintf(
-                'No data tier configuration has been find with name \'%s\' ', 
-                $datatierName
-            ));
-        } elseif (!$dataTierConfig instanceof DataConfigurationInterface) {
-            throw new \InvalidArgumentException(sprintf(
-                'Service has been found but the class is not an instance of '
-                    . '\'Cifren\OxPeckerData\Report\SQLInterface\''
-            ));
-        }
+        $this->validateArguments();
 
         if (
             isset($input->getArgument('args')[0])
             && 'help' == $input->getArgument('args')[0]
         ) {
             $this->helpDisplay(
-                $datatierName, 
-                $dataTierConfig->setParamsMapping(), 
+                $datatierName,
+                $dataTierConfig->setParamsMapping(),
                 $output
             );
 
             return true;
         }
         $args = $this->formatArguments(
-            $dataTierConfig->setParamsMapping(), 
+            $dataTierConfig->setParamsMapping(),
             $input->getArgument('args')
         );
 
         //log system
-        $this->startScript($datatierName, $args);
+        $this->startLog($datatierName, $args);
 
-        $dataProcess = $this->getContainer()->get('oxpecker.data.process');
-        $dataProcess->setLogger($this->getLogger());
+        $this->startProcess($dataTierConfig, $args);
 
-        $errorSignal = false;
-        try {
-            $dataProcess->process($dataTierConfig, $args);
-        } catch (\Exception $e) {
-            $errorSignal = true;
-            $dataTierConfigOptions = $dataTierConfig->getOptions();
-            $this->stopScript($datatierName, $args);
-        }
         //log system
-        $this->stopScript($dataTierConfig, $errorSignal, $datatierName, $args);
+        $this->stopLog($datatierName, $args);
 
         return true;
     }
 
-    protected function startScript(array $args)
+    protected function startLog(array $args)
     {
         $this->setStartTime();
-        $this->getLogger()->notice('Arguments: '.$this->getImplodeArguments($args));
+        $this->logNotice('Arguments: '.$this->getImplodeArguments($args));
     }
 
-    protected function stopScript($name, $args)
+    protected function stopLog($name, $args)
     {
         $this->setEndTime();
         $this->noticeTime();
@@ -99,7 +80,7 @@ class RunCommand extends AdvancedCommand
     }
 
     /**
-     * Explicit arguments for a selected config,.
+     * Explicit arguments for a selected configuration,.
      *
      * @param string          $name
      * @param array|null      $mapping
@@ -119,7 +100,7 @@ class RunCommand extends AdvancedCommand
             $i = 0;
             foreach ($mapping as $key => $map) {
                 $parameterArgumentMessages[$i]['column1'] = "<fg=green>$key</fg=green>";
-                $parameterArgumentMessages[$i]['column2'] = 
+                $parameterArgumentMessages[$i]['column2'] =
                     $map ? "<fg=yellow>default: $map</fg=yellow>" : null;
                 ++$i;
             }
@@ -131,7 +112,7 @@ class RunCommand extends AdvancedCommand
         $output->writeln('<fg=yellow>Arguments</fg=yellow>');
         foreach ($parameterArgumentMessages as $parameterArgumentMessage) {
             $message = " {$parameterArgumentMessage['column1']}";
-            $message .= isset($parameterArgumentMessage['column2']) ? 
+            $message .= isset($parameterArgumentMessage['column2']) ?
                 '      '.$parameterArgumentMessage['column2'] : null;
             $output->writeln($message);
         }
@@ -139,15 +120,15 @@ class RunCommand extends AdvancedCommand
     }
 
     /**
-     * Format arguments in order to contain default from config and return an 
+     * Format arguments in order to contain default from config and return an
      * array of arguments from the input.
      *
      * If mapping is null, means no arguments required
-     * 
-     * If mapping is an empty array, means no arguments required and throw issue 
+     *
+     * If mapping is an empty array, means no arguments required and throw issue
      * if there is
-     * 
-     * If mapping is an array, system will control each argument, throw issue 
+     *
+     * If mapping is an array, system will control each argument, throw issue
      * if argument not in the list come from input
      *
      * @param array $mappingArgs
@@ -168,12 +149,12 @@ class RunCommand extends AdvancedCommand
                 continue;
             }
             if (
-                is_array($mappingArgs) 
+                is_array($mappingArgs)
                 && !in_array($argumentExploded[0], array_keys($mappingArgs))
             ) {
                 throw new \Exception(
                     "The argument '{$argumentExploded[0]}' is not part of the "
-                    . "mapping defined in configuration"
+                    .'mapping defined in configuration'
                 );
             }
             $formatedArgs[$argumentExploded[0]] = $argumentExploded[1];
@@ -192,5 +173,34 @@ class RunCommand extends AdvancedCommand
         return implode(', ', array_map(function ($v, $k) {
             return sprintf("%s='%s'", $k, $v);
         }, $input, array_keys($input)));
+    }
+
+    public function startProcess($dataTierConfig, $args)
+    {
+        $dataProcess = $this->getContainer()->get('oxpecker.data.process');
+        $dataProcess->setLogger($this->getLogger());
+        try {
+            $dataProcess->process($dataTierConfig, $args);
+        } catch (\Exception $e) {
+            $this->getLogger()->error('Error on script');
+        }
+    }
+
+    public function validateArguments()
+    {
+        $datatierName = $input->getArgument('namedatatier');
+        $dataTierConfig = $this->getContainer()->get($datatierName);
+
+        if (!$dataTierConfig) {
+            throw new \InvalidArgumentException(sprintf(
+                'No data tier configuration has been find with name \'%s\' ',
+                $datatierName
+            ));
+        } elseif (!$dataTierConfig instanceof DataConfigurationInterface) {
+            throw new \InvalidArgumentException(sprintf(
+                'Service has been found but the class is not an instance of '
+                    .'\'Cifren\OxPeckerData\Report\SQLInterface\''
+            ));
+        }
     }
 }

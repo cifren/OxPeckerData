@@ -2,13 +2,13 @@
 
 namespace Cifren\OxPeckerData\Core;
 
-use Cifren\OxPeckerData\Definition\DataConfigurationInterface;
-use Knp\ETL\Context\Context;
-use Doctrine\ORM\EntityManager;
-use Cifren\OxPeckerData\ETL\SQL\DataSource\DataSourceManager;
 use Cifren\OxPeckerData\Definition\Context as DataProcessContext;
-use Symfony\Bridge\Monolog\Logger;
-use Cifren\OxPeckerData\ETL\Core\SqlETLProcess;
+use Cifren\OxPeckerData\Definition\DataConfigurationInterface;
+use Cifren\OxPeckerData\Model\StopwatchInterface;
+use Doctrine\ORM\EntityManager;
+use Knp\ETL\Context\Context as ETLProcessContext;
+use Psr\Log\LoggerInterface;
+use Psr\Log\LogLevel;
 
 /**
  * Cifren\OxPeckerData\Core\DataProcess.
@@ -21,28 +21,27 @@ class DataProcess
     protected $entityManager;
 
     /**
-     * @var Logger
+     * @var LoggerInterface
      */
     protected $logger;
 
     /**
-     * @var DataSourceManager
+     * @var DataConfigurationInterface
      */
-    protected $dataSourceManager;
+    protected $dataConfiguration;
 
     /**
      * @var StopwatchInterface
      */
     protected $stopWatch;
 
+    /**
+     * 
+     * @param StopwatchInterface $stopWatch
+     */
     public function __construct(
-            EntityManager $entityManager, 
-            Logger $logger, 
             StopwatchInterface $stopWatch
     ) {
-        $this->entityManager = $entityManager;
-        $this->logger = $logger;
-        $this->dataSourceManager = new DataSourceManager($entityManager, $logger);
         $this->stopWatch = $stopWatch;
     }
 
@@ -56,36 +55,32 @@ class DataProcess
     {
         $dataProcessContext = $this->createContext($params);
 
-        $this->getLogger()->notice('PreProcess');
+        $this->logNotice('PreProcess');
 
         $this->stopWatch->start('preProcess');
         $config->preProcess($dataProcessContext);
         $this->stopWatch->stop('preProcess');
         $this
-            ->getLogger()
-            ->notice(sprintf(
-                    'Executed in %s', 
+            ->logNotice(sprintf(
+                    'Executed in %s',
                     $this->stopWatch
                         ->getFinishTime('preProcess')
                         ->format('%hh %im %ss')
             ));
-        if ($config->getEntityManager()) {
-            $this->setEntityManager($config->getEntityManager());
-        }
 
         $etlProcesses = $config->getETLProcesses($dataProcessContext);
         $dataProcessContext->setEtlProcesses($etlProcesses);
 
-        $this->getLogger()->notice('Execute ETL Processes');
+        $this->logNotice('Execute ETL Processes');
 
         $this->executeETLProcesses($etlProcesses);
 
-        $this->getLogger()->notice('PostProcess');
+        $this->logNotice('PostProcess');
         $this->stopWatch->start('postProcess');
         $config->postProcess($dataProcessContext);
         $this->stopWatch->stop('postProcess');
-        $this->getLogger()->notice(sprintf(
-            'Executed in %s', 
+        $this->logNotice(sprintf(
+            'Executed in %s',
             $this->stopWatch
                 ->getFinishTime('postProcess')
                 ->format('%hh %im %ss')
@@ -99,50 +94,28 @@ class DataProcess
      */
     protected function executeETLProcesses(array $etlProcesses)
     {
+        !count($etlProcesses) ?? $this->logNotice('No ETL processes found');
+
         foreach ($etlProcesses as $etlProcess) {
             $etlProcess->setLogger($this->getLogger());
             if (!$etlProcess->getContext()) {
-                $etlProcess->setContext(new Context());
+                $etlProcess->setContext(new ETLProcessContext());
             }
 
-            if ($etlProcess instanceof SqlETLProcess) {
-                $etlProcess->setDatasourceManager($this->getDatasourceManager());
-            }
+//            if ($etlProcess instanceof SqlETLProcess) {
+//                $etlProcess->setDatasourceManager($this->getDatasourceManager());
+//            }
             $this->stopWatch->start('etlProcess');
             $etlProcess->process();
             $this->stopWatch->stop('etlProcess');
-            $this->getLogger()->notice(sprintf(
-                'Executed in %s', 
+            $this->logNotice(sprintf(
+                'Executed in %s',
                 $this->stopWatch
                     ->getFinishTime('etlProcess')
                     ->format('%hh %im %ss')
             ));
         }
-        $this->getDatasourceManager()->clear();
-    }
-
-    /**
-     * setEntityManager.
-     *
-     * @param EntityManager $entityManager
-     *
-     * @return DataProcess
-     */
-    public function setEntityManager(EntityManager $entityManager)
-    {
-        $this->entityManager = $entityManager;
-
-        return $this;
-    }
-
-    /**
-     * getEntityManager.
-     *
-     * @return EntityManager
-     */
-    public function getEntityManager()
-    {
-        return $this->entityManager;
+//        $this->getDatasourceManager()->clear();
     }
 
     /**
@@ -162,27 +135,21 @@ class DataProcess
     /**
      * getLogger.
      *
-     * @throws \Exception
-     *
-     * @return Logger
+     * @return LoggerInterface
      */
     public function getLogger()
     {
-        if (!$this->logger) {
-            throw new \Exception('did you forget to setLogger ?');
-        }
-
         return $this->logger;
     }
 
     /**
      * setLogger.
      *
-     * @param Logger $logger
+     * @param LoggerInterface $logger
      *
      * @return DataProcess
      */
-    public function setLogger(Logger $logger)
+    public function setLogger(LoggerInterface $logger)
     {
         $this->logger = $logger;
 
@@ -190,29 +157,21 @@ class DataProcess
     }
 
     /**
-     * @param DataSourceManager $datasourceManager
-     *
-     * @return DataProcess
+     * @param string $message
      */
-    public function setDatasourceManager(DataSourceManager $datasourceManager)
+    public function logNotice($message)
     {
-        $this->dataSourceManager = $datasourceManager;
-
-        return $this;
+        $this->log(LogLevel::NOTICE, $message);
     }
 
     /**
-     * @throws \Exception
-     *
-     * @return DataSourceManager
+     * @param string $level
+     * @param string $message
      */
-    public function getDatasourceManager()
+    public function log($level, $message)
     {
-        if (!$this->dataSourceManager) {
-            throw new \Exception('did you forget to setDatasourceManager ?');
+        if ($this->getLogger()) {
+            $this->getLogger()->log($level, $message);
         }
-        $this->dataSourceManager->setEntityManager($this->getEntityManager());
-
-        return $this->dataSourceManager;
     }
 }

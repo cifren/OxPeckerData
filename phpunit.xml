@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <phpunit
-     convertErrorsToExceptions="true"
-     convertNoticesToExceptions="true"
-     convertWarningsToExceptions="true"
-     backupGlobals="true"
-     backupStaticAttributes="false"
-     colors="true"
+    backupGlobals="true"
+    colors="true"     
+    beStrictAboutTestsThatDoNotTestAnything="true"
 >
 
     <testsuites>
@@ -20,12 +17,7 @@
             addUncoveredFilesFromWhitelist="true"
             processUncoveredFilesFromWhitelist="true"
         >
-            <directory suffix=".php">./</directory>
-            <exclude>
-                <directory>./Resources</directory>
-                <directory>./Tests</directory>
-                <directory>./vendor</directory>
-            </exclude>
+            <directory suffix=".php">./Tests</directory>
         </whitelist>
     </filter>
     <!--logging>

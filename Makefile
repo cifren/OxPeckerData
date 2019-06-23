@@ -32,6 +32,13 @@ php-cs-fixer.fix:
 
 php-cs-fixer.diff:
 	$(cmd_phpcsfixer) fix -v --diff --dry-run"
+
 ####################
 
+## Composer
+composer.install:
+	$(cmd_composer) install
+
+composer.update:
+	$(cmd_composer) update
 

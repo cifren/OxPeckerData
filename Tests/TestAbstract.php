@@ -7,16 +7,6 @@ use PHPUnit\Framework\TestCase;
 class TestAbstract extends TestCase
 {
     /**
-     * @param string $originalClassName
-     *
-     * @return \PHPUnit_Framework_MockObject_MockObject|mixed
-     */
-    protected function createMock($originalClassName)
-    {
-        return parent::createMock($originalClassName);
-    }
-
-    /**
      * Test protected methods.
      *
      * @param $object
