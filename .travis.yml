@@ -1,12 +1,5 @@
 sudo: false
-language:
-    - php
-
-services:
-    - docker
-
-before_install:
-    - docker pull composer:latest
+language: php
 
 before_script:
     #coverage needs xdebug
