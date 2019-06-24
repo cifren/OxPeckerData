@@ -12,7 +12,7 @@
         }
     ],
     "require": {
-        "php": "*",
+        "php": "^7.*",
         "knplabs/etl": "*",
         "psr/log": "*",
         "symfony/stopwatch": "*"
