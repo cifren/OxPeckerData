@@ -1,19 +1,21 @@
 sudo: false
 language:
     - php
-php:
-    - "5.5"
-    
+
+services:
+    - docker
+
+before_install:
+    - docker pull composer:latest
+
 before_script:
     #coverage needs xdebug
     #- phpenv config-rm xdebug.ini
     - composer install
   
 script:
-    - composer run lint
-    - composer run test_build
-    - composer run test
-    - composer run coverall
+    - php bin/php-cs-fixer fix -v --diff --dry-run
+    - php bin/phpunit
     
 notifications:
     email:

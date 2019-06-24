@@ -87,7 +87,7 @@ class DataProcess
         !count($etlProcesses) ?? $this->notice('No ETL processes found');
 
         foreach ($etlProcesses as $etlProcess) {
-            if($this->logger){
+            if ($this->logger) {
                 $etlProcess->setLogger($this->logger);
             }
 

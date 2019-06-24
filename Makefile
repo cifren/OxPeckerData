@@ -31,7 +31,7 @@ php-cs-fixer.fix:
 	$(cmd_phpcsfixer) fix
 
 php-cs-fixer.diff:
-	$(cmd_phpcsfixer) fix -v --diff --dry-run"
+	$(cmd_phpcsfixer) fix -v --diff --dry-run
 
 ####################
 
