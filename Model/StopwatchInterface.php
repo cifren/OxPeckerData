@@ -13,4 +13,8 @@ interface StopwatchInterface
      * @return \DateInterval
      */
     public function getFinishTime($name);
+
+    public function start(string $string);
+
+    public function stop(string $string);
 }

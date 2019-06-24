@@ -13,7 +13,5 @@ interface ETLProcessInterface
 
     public function setContext(ContextInterface $context);
 
-    public function getLogger();
-
     public function setLogger(LoggerInterface $logger);
 }
