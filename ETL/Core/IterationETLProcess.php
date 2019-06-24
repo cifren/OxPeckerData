@@ -2,15 +2,21 @@
 
 namespace Cifren\OxPeckerData\ETL\Core;
 
+use Cifren\OxPeckerData\ETL\Iteration\Extractor\Doctrine\ORMExtractorInterface;
+use Cifren\OxPeckerData\ETL\Iteration\Loader\Doctrine\ORMLoaderInterface;
 use Knp\ETL\ExtractorInterface;
 use Knp\ETL\TransformerInterface;
 use Knp\ETL\LoaderInterface;
 use Knp\ETL\ContextInterface;
+use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
-use Cifren\OxPeckerData\ETL\Iteration\LoggableInterface;
+use Psr\Log\LoggerTrait;
 
-class IterationETLProcess implements ETLProcessInterface, LoggableInterface
+class IterationETLProcess implements ETLProcessInterface
 {
+    use LoggerAwareTrait;
+    use LoggerTrait;
+
     /**
      * @var ContextInterface
      */
@@ -31,12 +37,7 @@ class IterationETLProcess implements ETLProcessInterface, LoggableInterface
      */
     protected $loader;
 
-    /**
-     * @var LoggerInterface
-     */
-    protected $logger;
-
-    public function __construct(ExtractorInterface $extractor, array $transformers, LoaderInterface $loader, LoggerInterface $logger = null)
+    public function __construct(ORMExtractorInterface $extractor, array $transformers, ORMLoaderInterface $loader, LoggerInterface $logger = null)
     {
         $this->extractor = $extractor;
         $this->transformers = $transformers;
@@ -48,13 +49,13 @@ class IterationETLProcess implements ETLProcessInterface, LoggableInterface
     {
         $context = $this->getContext();
         $extractor = $this->getExtractor();
-        $extractor->setLogger($this->getLogger());
+        $extractor->setLogger($this->logger);
         $transformers = $this->getTransformers();
         foreach ($transformers as $tranformer) {
-            $tranformer->setLogger($this->getLogger());
+            $tranformer->setLogger($this->logger);
         }
         $loader = $this->getLoader();
-        $loader->setLogger($this->getLogger());
+        $loader->setLogger($this->logger);
 
         $i = 0;
         if (!$extractor) {
@@ -90,11 +91,17 @@ class IterationETLProcess implements ETLProcessInterface, LoggableInterface
         $loader->flush($context);
     }
 
+    /**
+     * @return ORMLoaderInterface
+     */
     public function getLoader()
     {
         return $this->loader;
     }
 
+    /**
+     * @return ORMExtractorInterface
+     */
     public function getExtractor()
     {
         return $this->extractor;
@@ -138,19 +145,17 @@ class IterationETLProcess implements ETLProcessInterface, LoggableInterface
         return $this;
     }
 
-    public function getLogger()
+    /**
+     * Logs with an arbitrary level.
+     *
+     * @param string $level
+     * @param string $message
+     * @param array  $context
+     */
+    public function log($level, $message, array $context = [])
     {
-        if (!$this->logger) {
-            throw new \Exception('did you forget to setLogger ?');
+        if ($this->logger) {
+            $this->logger->log($level, $message, $context);
         }
-
-        return $this->logger;
-    }
-
-    public function setLogger(LoggerInterface $logger)
-    {
-        $this->logger = $logger;
-
-        return $this;
     }
 }

@@ -5,25 +5,17 @@ namespace Cifren\OxPeckerData\Core;
 use Cifren\OxPeckerData\Definition\Context as DataProcessContext;
 use Cifren\OxPeckerData\Definition\DataConfigurationInterface;
 use Cifren\OxPeckerData\Model\StopwatchInterface;
-use Doctrine\ORM\EntityManager;
 use Knp\ETL\Context\Context as ETLProcessContext;
-use Psr\Log\LoggerInterface;
-use Psr\Log\LogLevel;
+use Psr\Log\LoggerAwareTrait;
+use Psr\Log\LoggerTrait;
 
 /**
  * Cifren\OxPeckerData\Core\DataProcess.
  */
 class DataProcess
 {
-    /**
-     * @var EntityManager
-     */
-    protected $entityManager;
-
-    /**
-     * @var LoggerInterface
-     */
-    protected $logger;
+    use LoggerAwareTrait;
+    use LoggerTrait;
 
     /**
      * @var DataConfigurationInterface
@@ -36,12 +28,10 @@ class DataProcess
     protected $stopWatch;
 
     /**
-     * 
      * @param StopwatchInterface $stopWatch
      */
-    public function __construct(
-            StopwatchInterface $stopWatch
-    ) {
+    public function __construct(StopwatchInterface $stopWatch)
+    {
         $this->stopWatch = $stopWatch;
     }
 
@@ -51,17 +41,17 @@ class DataProcess
      * @param DataConfigurationInterface $config
      * @param array                      $params
      */
-    public function process(DataConfigurationInterface $config, array $params)
+    public function process(DataConfigurationInterface $config, array $params = [])
     {
         $dataProcessContext = $this->createContext($params);
 
-        $this->logNotice('PreProcess');
+        $this->notice('PreProcess');
 
         $this->stopWatch->start('preProcess');
         $config->preProcess($dataProcessContext);
         $this->stopWatch->stop('preProcess');
         $this
-            ->logNotice(sprintf(
+            ->notice(sprintf(
                     'Executed in %s',
                     $this->stopWatch
                         ->getFinishTime('preProcess')
@@ -71,15 +61,15 @@ class DataProcess
         $etlProcesses = $config->getETLProcesses($dataProcessContext);
         $dataProcessContext->setEtlProcesses($etlProcesses);
 
-        $this->logNotice('Execute ETL Processes');
+        $this->notice('Execute ETL Processes');
 
         $this->executeETLProcesses($etlProcesses);
 
-        $this->logNotice('PostProcess');
+        $this->notice('PostProcess');
         $this->stopWatch->start('postProcess');
         $config->postProcess($dataProcessContext);
         $this->stopWatch->stop('postProcess');
-        $this->logNotice(sprintf(
+        $this->notice(sprintf(
             'Executed in %s',
             $this->stopWatch
                 ->getFinishTime('postProcess')
@@ -94,10 +84,13 @@ class DataProcess
      */
     protected function executeETLProcesses(array $etlProcesses)
     {
-        !count($etlProcesses) ?? $this->logNotice('No ETL processes found');
+        !count($etlProcesses) ?? $this->notice('No ETL processes found');
 
         foreach ($etlProcesses as $etlProcess) {
-            $etlProcess->setLogger($this->getLogger());
+            if($this->logger){
+                $etlProcess->setLogger($this->logger);
+            }
+
             if (!$etlProcess->getContext()) {
                 $etlProcess->setContext(new ETLProcessContext());
             }
@@ -108,7 +101,7 @@ class DataProcess
             $this->stopWatch->start('etlProcess');
             $etlProcess->process();
             $this->stopWatch->stop('etlProcess');
-            $this->logNotice(sprintf(
+            $this->notice(sprintf(
                 'Executed in %s',
                 $this->stopWatch
                     ->getFinishTime('etlProcess')
@@ -133,45 +126,14 @@ class DataProcess
     }
 
     /**
-     * getLogger.
-     *
-     * @return LoggerInterface
-     */
-    public function getLogger()
-    {
-        return $this->logger;
-    }
-
-    /**
-     * setLogger.
-     *
-     * @param LoggerInterface $logger
-     *
-     * @return DataProcess
-     */
-    public function setLogger(LoggerInterface $logger)
-    {
-        $this->logger = $logger;
-
-        return $this;
-    }
-
-    /**
-     * @param string $message
-     */
-    public function logNotice($message)
-    {
-        $this->log(LogLevel::NOTICE, $message);
-    }
-
-    /**
      * @param string $level
      * @param string $message
+     * @param array  $context
      */
-    public function log($level, $message)
+    public function log($level, $message, array $context = [])
     {
-        if ($this->getLogger()) {
-            $this->getLogger()->log($level, $message);
+        if ($this->logger) {
+            $this->logger->log($level, $message, $context);
         }
     }
 }

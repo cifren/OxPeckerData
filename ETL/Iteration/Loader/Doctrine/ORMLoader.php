@@ -5,11 +5,9 @@ namespace Cifren\OxPeckerData\ETL\Iteration\Loader\Doctrine;
 use Psr\Log\LoggerAwareTrait;
 use Doctrine\ORM\EntityManager;
 use Knp\ETL\ContextInterface;
-use Knp\ETL\LoaderInterface;
-use Cifren\OxPeckerData\ETL\Iteration\LoggableInterface;
 use Psr\Log\LoggerInterface;
 
-class ORMLoader implements LoaderInterface, LoggableInterface
+class ORMLoader implements ORMLoaderInterface
 {
     use LoggerAwareTrait;
 

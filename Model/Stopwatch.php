@@ -2,10 +2,12 @@
 
 namespace Cifren\OxPeckerData\Model;
 
+use Symfony\Component\Stopwatch\Stopwatch as StopwatchAlias;
+
 /**
  * Earls\FlamingoCommandQueueBundle\Model\Stopwatch.
  */
-class Stopwatch extends \Symfony\Component\Stopwatch\Stopwatch implements StopwatchInterface
+class Stopwatch extends StopwatchAlias implements StopwatchInterface
 {
     /**
      * @param string $name
