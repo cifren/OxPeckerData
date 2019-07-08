@@ -8,6 +8,12 @@ class ArrayAlterationTransformer extends AlterationTransformer
 {
     protected $transformerFunction;
 
+    /**
+     * @param mixed $array
+     * @param ContextInterface $context
+     * @return mixed
+     * @throws \Exception
+     */
     public function transform($array, ContextInterface $context)
     {
         if (!is_array($array)) {

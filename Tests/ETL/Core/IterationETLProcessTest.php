@@ -12,9 +12,6 @@ use Psr\Log\AbstractLogger;
 
 class IterationETLProcessTest extends TestCase
 {
-    /**
-     * @group wip
-     */
     public function testProcess()
     {
         $ETLProcess = $this->getIterationETLProcess();
@@ -30,16 +27,7 @@ class IterationETLProcessTest extends TestCase
             ->will($this->onConsecutiveCalls(1, 2, 3, 5, 7));
 
         $tranformer1 = $this->createMock(ArrayAlterationTransformer::class);
-        $tranformer1
-            ->expects($this->atLeastOnce())
-            ->method('transform')
-            ->willReturn('plop');
-
         $tranformer2 = $this->createMock(ArrayAlterationTransformer::class);
-        $tranformer2
-            ->expects($this->atLeastOnce())
-            ->method('transform')
-            ->willReturn('plop2');
         $transformers = [$tranformer1, $tranformer2];
 
         $loader = $this->createMock(ORMLoader::class);
