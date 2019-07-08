@@ -3,6 +3,7 @@
 namespace Cifren\OxPeckerData\Core;
 
 use Cifren\OxPeckerData\Definition\Context as DataProcessContext;
+use Cifren\OxPeckerData\Definition\ContextInterface;
 use Cifren\OxPeckerData\Definition\DataConfigurationInterface;
 use Cifren\OxPeckerData\Model\StopwatchInterface;
 use Knp\ETL\Context\Context as ETLProcessContext;
@@ -41,7 +42,7 @@ class DataProcess
      * @param DataConfigurationInterface $config
      * @param array                      $params
      */
-    public function process(DataConfigurationInterface $config, array $params = [])
+    public function process(DataConfigurationInterface $config, array $params = []): void
     {
         $dataProcessContext = $this->createContext($params);
 
@@ -82,9 +83,9 @@ class DataProcess
      *
      * @param array $etlProcesses
      */
-    protected function executeETLProcesses(array $etlProcesses)
+    protected function executeETLProcesses(array $etlProcesses): void
     {
-        !count($etlProcesses) ?? $this->notice('No ETL processes found');
+        !count($etlProcesses) ?: $this->notice('No ETL processes found');
 
         foreach ($etlProcesses as $etlProcess) {
             if ($this->logger) {
@@ -116,13 +117,15 @@ class DataProcess
      *
      * @param array $params
      *
-     * @return DataProcessContext
+     * @return ContextInterface
      */
-    protected function createContext(array $params)
+    protected function createContext(array $params): ContextInterface
     {
         $context = new DataProcessContext($params);
 
-        return $context->setArgs($params);
+        $context->setArgs($params);
+
+        return $context;
     }
 
     /**
@@ -130,7 +133,7 @@ class DataProcess
      * @param string $message
      * @param array  $context
      */
-    public function log($level, $message, array $context = [])
+    public function log($level, $message, array $context = []): void
     {
         if ($this->logger) {
             $this->logger->log($level, $message, $context);

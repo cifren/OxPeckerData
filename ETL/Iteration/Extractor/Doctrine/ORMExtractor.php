@@ -2,15 +2,12 @@
 
 namespace Cifren\OxPeckerData\ETL\Iteration\Extractor\Doctrine;
 
-use Knp\ETL\Extractor\Doctrine\ORMExtractor as BaseExtractor;
-use Knp\ETL\ContextInterface;
 use Psr\Log\LoggerAwareTrait;
-use Psr\Log\LoggerInterface;
 
 /**
- * Cifren\OxPeckerData\ETL\Extractor\Doctrine\ORMEXtractor.
+ * Cifren\OxPeckerData\ETL\Extractor\Doctrine\ORMExtractor.
  */
-class ORMExtractor extends BaseExtractor implements ORMExtractorInterface
+class ORMExtractor implements ORMExtractorInterface
 {
     use LoggerAwareTrait;
 
@@ -25,26 +22,24 @@ class ORMExtractor extends BaseExtractor implements ORMExtractorInterface
     protected $count;
 
     /**
-     * Could be a Query or a QueryBuilder.
-     *
-     * @throws \Exception
+     * @var
      */
-    public function __construct($query, LoggerInterface $logger = null)
+    protected $iterator;
+
+    /**
+     * Could be a Query or a QueryBuilder.
+     */
+    public function __construct($query)
     {
-        if (empty($query)) {
-            throw new \Exception('Query can\'t be empty');
-        }
-        parent::__construct($query, $logger);
+        $this->query = $query;
     }
 
     /**
      * Seems to have a bug in Knp Bundle, correctif here.
      *
-     * @param \Knp\ETL\ContextInterface $context
-     *
      * @return \Doctrine\ORM\Query|\Doctrine\ORM\QueryBuilder
      */
-    public function extract(ContextInterface $context)
+    public function extract()
     {
         $current = $this->next();
 
@@ -52,7 +47,7 @@ class ORMExtractor extends BaseExtractor implements ORMExtractorInterface
     }
 
     /**
-     * @return type
+     * @return \Doctrine\ORM\Query|\Doctrine\ORM\QueryBuilder
      */
     public function getQuery()
     {
@@ -70,5 +65,42 @@ class ORMExtractor extends BaseExtractor implements ORMExtractorInterface
         }
 
         return $this->count;
+    }
+
+    public function rewind()
+    {
+        return $this->getIterator()->rewind();
+    }
+
+    public function current()
+    {
+        return $this->getIterator()->current();
+    }
+
+    public function key()
+    {
+        return $this->getIterator()->key();
+    }
+
+    public function next()
+    {
+        $next = $this->getIterator()->next();
+        $this->logger->debug('Next SQL', ['sql' => $this->getQuery()->getSql()]);
+
+        return $next;
+    }
+
+    public function valid()
+    {
+        return $this->getIterator()->valid();
+    }
+
+    public function getIterator()
+    {
+        if (null === $this->iterator) {
+            $this->iterator = $this->getQuery()->iterate();
+        }
+
+        return $this->iterator;
     }
 }

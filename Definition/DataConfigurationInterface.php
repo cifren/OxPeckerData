@@ -2,47 +2,27 @@
 
 namespace Cifren\OxPeckerData\Definition;
 
-use Doctrine\ORM\EntityManager;
-use Symfony\Bridge\Monolog\Logger;
+use Psr\Log\LoggerInterface;
 
 interface DataConfigurationInterface
 {
     /**
      * @param \Cifren\OxPeckerData\Definition\Context $context
-     *
-     * @return array
      */
-    public function getDataSources(Context $context);
+    public function getETLProcesses(Context $context): array;
 
     /**
      * @param \Cifren\OxPeckerData\Definition\Context $context
      */
-    public function getETLProcesses(Context $context);
+    public function preProcess(Context $context): void;
 
     /**
      * @param \Cifren\OxPeckerData\Definition\Context $context
      */
-    public function preProcess(Context $context);
+    public function postProcess(Context $context): void;
 
     /**
-     * @param \Cifren\OxPeckerData\Definition\Context $context
+     * @param LoggerInterface $logger
      */
-    public function postProcess(Context $context);
-
-    public function setParamsMapping();
-
-    /**
-     * @param \Symfony\Bridge\Monolog\Logger $logger
-     */
-    public function setLogger(Logger $logger);
-
-    public function getOptions();
-
-    public function getEntityManager();
-
-    public function setEntityManager(EntityManager $entityManager);
-
-    public function setQueueGroupName($name, array $args);
-
-    public function setQueueUniqueId($name, array $args);
+    public function setLogger(LoggerInterface $logger): void;
 }

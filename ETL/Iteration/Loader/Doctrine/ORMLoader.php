@@ -7,7 +7,7 @@ use Doctrine\ORM\EntityManager;
 use Knp\ETL\ContextInterface;
 use Psr\Log\LoggerInterface;
 
-class ORMLoader implements ORMLoaderInterface
+class ORMLoader extends AbstractLoader
 {
     use LoggerAwareTrait;
 

@@ -2,11 +2,13 @@
 
 namespace Cifren\OxPeckerData\ETL\Iteration\Extractor\Doctrine;
 
+use Psr\Log\LoggerInterface;
+
 interface ORMExtractorInterface
 {
-    public function setLogger(\Psr\Log\LoggerInterface $logger);
+    public function setLogger(LoggerInterface $logger);
 
     public function getCount();
 
-    public function extract(\Knp\ETL\ContextInterface $getContext);
+    public function extract();
 }

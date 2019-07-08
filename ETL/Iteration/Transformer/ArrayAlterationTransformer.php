@@ -3,7 +3,6 @@
 namespace Cifren\OxPeckerData\ETL\Iteration\Transformer;
 
 use Knp\ETL\ContextInterface;
-use Symfony\Component\Form\Exception\UnexpectedTypeException;
 
 class ArrayAlterationTransformer extends AlterationTransformer
 {
@@ -12,7 +11,7 @@ class ArrayAlterationTransformer extends AlterationTransformer
     public function transform($array, ContextInterface $context)
     {
         if (!is_array($array)) {
-            throw new UnexpectedTypeException($array, 'array');
+            throw new \Exception('array needed');
         }
         $args = array_merge([$array], $this->args);
         $arrayTransformed = call_user_func_array($this->transformerFunction, $args);
