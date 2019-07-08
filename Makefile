@@ -22,15 +22,17 @@ restart: down up
 ## Php
 phpunit:
 	$(cmd_phpunit)
+phpunit.wip:
+	$(cmd_phpunit) --group wip
 
 ### PHP CS Fixer ###
 
 cmd_phpcsfixer=$(cmd_php) bin/php-cs-fixer
 
-php-cs-fixer.fix:
+csfixer.fix:
 	$(cmd_phpcsfixer) fix
 
-php-cs-fixer.diff:
+csfixer.diff:
 	$(cmd_phpcsfixer) fix -v --diff --dry-run
 
 ####################
