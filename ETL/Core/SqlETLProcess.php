@@ -19,9 +19,10 @@ class SqlETLProcess extends AbstractETLProcess
 
     /**
      * SqlETLProcess constructor.
+     *
      * @param $query
      * @param $entityName
-     * @param array $mapping
+     * @param array      $mapping
      * @param array|null $options
      */
     public function __construct($query, $entityName, array $mapping, array $options = null)
@@ -38,8 +39,9 @@ class SqlETLProcess extends AbstractETLProcess
     }
 
     /**
-     * @return DataSourceManager
      * @throws \Exception
+     *
+     * @return DataSourceManager
      */
     public function getDatasourceManager(): DataSourceManager
     {
@@ -52,6 +54,7 @@ class SqlETLProcess extends AbstractETLProcess
 
     /**
      * @param DataSourceManager $datasourceManager
+     *
      * @return ETLProcessInterface
      */
     public function setDatasourceManager(DataSourceManager $datasourceManager): ETLProcessInterface
