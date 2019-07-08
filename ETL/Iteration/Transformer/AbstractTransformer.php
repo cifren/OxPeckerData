@@ -27,8 +27,6 @@ abstract class AbstractTransformer implements TransformerInterface
      * @param mixed  $level
      * @param string $message
      * @param array  $context
-     *
-     * @return void
      */
     public function log($level, $message, array $context = [])
     {
