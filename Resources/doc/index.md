@@ -1,7 +1,7 @@
 Installation
 ============
 
-* [Installation] (installation.md)
+* [Installation](installation.md)
 
 Usage Documentation
 ===================
