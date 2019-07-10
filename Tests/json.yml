@@ -1,0 +1,38 @@
+json:
+  conf:
+    uri: /c/www/data
+  file:
+    - entity: item
+      fields:
+        product:
+          field: product
+          fields:
+            itemid: id
+            legacyId: legacyId
+            type: type
+            prices:
+              - field: price
+                fields:
+                  tax: tax
+                  value: val
+        type: type
+        id: id
+
+xml:
+  conf:
+    uri: /c/www/data
+  file:
+    shop:
+      entity: orga
+      properties:
+        id: id
+      fields:
+        name: name
+        price_tags:
+          - price_tag:
+              field: product
+              properties:
+                id: id
+              fields:
+                name: name
+                plu: plu
