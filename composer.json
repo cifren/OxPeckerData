@@ -1,7 +1,7 @@
 {
     "name": "cifren/oxpecker-data",
     "type": "symfony-bundle",
-    "description": "Create quickly report tables with OxPeckerData, add-on for symfony",
+    "description": "Create quickly report tables with OxPeckerData",
     "keywords": ["reporting", "report", "data"],
     "homepage": "https://github.com/cifren/OxPeckerData",
     "license": "MIT",
@@ -22,7 +22,7 @@
         "friendsofphp/php-cs-fixer": "*",
         "php-coveralls/php-coveralls": "*"
     },
-    "autoload":     {
+    "autoload": {
         "psr-0": { "Cifren\\OxPeckerData": "" }
     },
     "minimum-stability": "dev",

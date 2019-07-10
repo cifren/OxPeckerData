@@ -9,10 +9,12 @@ class ArrayAlterationTransformer extends AlterationTransformer
     protected $transformerFunction;
 
     /**
-     * @param mixed $array
+     * @param mixed            $array
      * @param ContextInterface $context
-     * @return mixed
+     *
      * @throws \Exception
+     *
+     * @return mixed
      */
     public function transform($array, ContextInterface $context)
     {
